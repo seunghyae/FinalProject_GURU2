@@ -9,7 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Acitivity.LoginActivity"></activity>
+        <activity android:name=".Acitivity.AdminSettingActivity"></activity>
+        <activity android:name=".Acitivity.RegVoteActivity" />
+        <activity android:name=".Acitivity.AdminMainActivity" />
+        <activity android:name=".Acitivity.ResultVoteActivity" />
+        <activity android:name=".Acitivity.VoteActivity" />
+        <activity android:name=".Acitivity.SettingActivity" />
+        <activity android:name=".Acitivity.JoinActivity" />
+        <activity android:name=".Acitivity.LoginActivity" />
         <activity android:name=".Acitivity.UserMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
