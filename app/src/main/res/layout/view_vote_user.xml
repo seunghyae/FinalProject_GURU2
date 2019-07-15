@@ -56,9 +56,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="1"
-                >
+                android:layout_height="50dp"
+                android:weightSum="1">
 
                 <TextView
                     android:id="@+id/txtDate"
@@ -70,10 +69,11 @@
                 <Button
                     android:id="@+id/btnShowResult"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
                     android:layout_weight="0.2"
                     android:background="@drawable/btn_bg"
+                    android:gravity="center"
                     android:text="결과보기"
                     android:textColor="#FAFAFA"
                     android:textSize="11dp"
@@ -82,10 +82,11 @@
                 <Button
                     android:id="@+id/btnVote"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
                     android:layout_weight="0.2"
                     android:background="@drawable/btn_bg"
+                    android:gravity="center"
                     android:text="투표하기"
                     android:textColor="#FAFAFA"
                     android:textSize="11dp"
