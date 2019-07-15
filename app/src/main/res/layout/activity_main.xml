@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
     tools:context=".Acitivity.UserMainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:orientation="horizontal"
-        >
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/VoteTitle"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="match_parent"
             android:layout_weight="8"
             android:gravity="center"
             android:text="진행중인 투표"
+            android:textColor="#070707"
             android:textSize="36sp" />
 
         <ImageButton
@@ -36,6 +37,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
+        android:layout_height="match_parent"
+        android:layout_weight="9"></androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>
