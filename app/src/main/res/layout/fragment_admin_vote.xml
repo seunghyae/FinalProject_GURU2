@@ -5,10 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.AdminVoteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/VoteManageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="80dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="투표 관리"
+        android:textColor="#000000"
+        android:textSize="40sp" />
 
 </FrameLayout>
