@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="75dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -18,7 +18,7 @@
             android:id="@+id/VoteTitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="8"
+            android:layout_weight="9"
             android:gravity="center"
             android:text="진행중인 투표"
             android:textColor="#070707"
@@ -26,18 +26,17 @@
 
         <ImageButton
             android:id="@+id/btnSetting"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="50dp"
             android:layout_weight="2"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/settingicon" />
 
     </LinearLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="9"></androidx.viewpager.widget.ViewPager>
+        android:layout_weight="9"/>
 
 </LinearLayout>
