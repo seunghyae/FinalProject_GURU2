@@ -18,7 +18,8 @@
             android:gravity="center"
             android:text="회원가입"
             android:textColor="#000000"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editText"
