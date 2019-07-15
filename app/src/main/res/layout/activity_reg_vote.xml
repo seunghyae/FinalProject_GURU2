@@ -39,8 +39,8 @@
 
     <EditText
         android:id="@+id/edtExplain"
-        android:layout_width="347dp"
-        android:layout_height="176dp"
+        android:layout_width="339dp"
+        android:layout_height="133dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -50,10 +50,9 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/item1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtVoteTitle"
-        app:layout_constraintVertical_bias="0.237" />
+        app:layout_constraintVertical_bias="0.117" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -61,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="16dp"
         android:text="중복응답허용"
         app:layout_constraintBottom_toTopOf="@+id/item1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +72,7 @@
         android:layout_width="310dp"
         android:layout_height="47dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="216dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="항목 입력"
@@ -88,7 +87,7 @@
         android:layout_width="310dp"
         android:layout_height="47dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="항목 입력"
@@ -112,6 +111,56 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnChangeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:background="@drawable/btn_bg"
+        android:text="날짜설정"
+        android:textColor="#F5F1F1"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="443dp" />
+
+    <Button
+        android:id="@+id/btnChangeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="72dp"
+        android:background="@drawable/btn_bg"
+        android:text="시간설정"
+        android:textColor="#F5F1F1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toEndOf="@+id/btnChangeDate"
+        app:layout_constraintTop_toBottomOf="@+id/item2" />
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="102dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:hint="날짜표시"
+        app:layout_constraintEnd_toStartOf="@+id/txtTime"
+        app:layout_constraintHorizontal_bias="0.605"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChangeDate" />
+
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="102dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="72dp"
+        android:gravity="center"
+        android:hint="시간표시"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChangeTime" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
