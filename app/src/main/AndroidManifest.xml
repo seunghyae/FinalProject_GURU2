@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cho6.finalproject_guru2">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,8 +19,11 @@
         <activity android:name=".Acitivity.VoteActivity" />
         <activity android:name=".Acitivity.SettingActivity" />
         <activity android:name=".Acitivity.JoinActivity" />
-        <activity android:name=".Acitivity.LoginActivity" />
-        <activity android:name=".Acitivity.UserMainActivity">
+        <activity android:name=".Acitivity.UserMainActivity" ></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC4JUQBOocsood57IyUGoG7AwuZS4dO6Is" />
+        <activity android:name=".Acitivity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
