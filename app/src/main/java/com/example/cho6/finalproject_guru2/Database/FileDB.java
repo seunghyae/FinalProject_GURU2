@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
+import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -60,5 +61,15 @@ public class FileDB {
         List<MemberBean> memberList =
                 mGson.fromJson(listStr, new TypeToken<List<MemberBean>>(){}.getType() );
         return memberList;
+    }
+    public static List<VoteBean> getVoteList(Context context, String memId){
+        MemberBean memberBean = getFindMember(context, memId);
+        if(memberBean == null) return null;
+
+        if( memberBean.VoteList == null ) {
+            return new ArrayList<>();
+        }
+        else
+            return memberBean.VoteList;
     }
 }
