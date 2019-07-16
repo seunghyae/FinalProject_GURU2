@@ -49,10 +49,15 @@
         android:textSize="24sp"
         android:textStyle="normal" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"></androidx.viewpager.widget.ViewPager>
+        android:layout_weight="8"
+        android:orientation="vertical">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </LinearLayout>
