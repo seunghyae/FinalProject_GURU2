@@ -9,23 +9,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="10">
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="0dp"
             android:gravity="center"
             android:text="회원가입"
             android:textColor="#000000"
             android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/txtId"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="0dp"
             android:layout_margin="20dp"
+            android:layout_weight="2"
             android:ems="10"
             android:gravity="center"
             android:text="."
@@ -34,29 +37,38 @@
         <EditText
             android:id="@+id/edtName"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="0dp"
             android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="2"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="이름 :" />
+            android:hint="이름"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/edtMajor"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="0dp"
             android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="2"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="학과 :" />
+            android:hint="학과"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/edtNum"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="0dp"
             android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="2"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="학번 :" />
+            android:hint="학번"
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/btnJoin"
