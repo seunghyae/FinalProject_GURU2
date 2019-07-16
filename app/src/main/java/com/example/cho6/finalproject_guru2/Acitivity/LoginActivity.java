@@ -101,23 +101,27 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                        int count = 0;
+
                         for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                             MemberBean bean = snapshot.getValue(MemberBean.class);
                             String UUIDEmail = getUserIdFromUUID(loginedEmail);
                             if(TextUtils.equals(bean.memId, UUIDEmail)) {
                                 //FileDB memberBean 값을 저장
-                                FileDB.setLoginMember(getApplicationContext(),bean);
+                                FileDB.setLoginMember(getApplicationContext(), bean);
                                 //Firebase 인증
                                 firebaseAuthWithGoogle(account);
+                                count = 1;
                                 break;
                             }
                         }
-
-                        //회원가입 Activity 로 이동
-                        Intent i = new Intent(LoginActivity.this, JoinActivity.class);
-                        i.putExtra("email", loginedEmail);
-                        i.putExtra("tokenId", account.getIdToken());
-                        startActivity(i);
+                        if(count == 0) {
+                            //회원가입 Activity 로 이동
+                            Intent i = new Intent(LoginActivity.this, JoinActivity.class);
+                            i.putExtra("email", loginedEmail);
+                            i.putExtra("tokenId", account.getIdToken());
+                            startActivity(i);
+                        }
                     }
 
                     @Override
