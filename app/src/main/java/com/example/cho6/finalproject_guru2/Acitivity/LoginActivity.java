@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -102,15 +103,15 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         int count = 0;
-
                         for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                             MemberBean bean = snapshot.getValue(MemberBean.class);
                             String UUIDEmail = getUserIdFromUUID(loginedEmail);
                             if(TextUtils.equals(bean.memId, UUIDEmail)) {
                                 //FileDB memberBean 값을 저장
                                 FileDB.setLoginMember(getApplicationContext(), bean);
-                                //Firebase 인증
-                                firebaseAuthWithGoogle(account);
+
+                                //Firebase 인증 - true: 관리자, false: 유저
+                                firebaseAuthWithGoogle(account, bean.isAdmin);
                                 count = 1;
                                 break;
                             }
@@ -134,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }  //end onActivityResult()
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account){
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account, final boolean isAdmin){
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mFirebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -142,8 +143,11 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Toast.makeText(getBaseContext(), "Firebase 로그인 성공",
                             Toast.LENGTH_LONG).show();
-
-                    goMainActivity();
+                    if(isAdmin == false){
+                        goUserMainActivity(); //유저
+                    }else{
+                        goAdminMainActivity(); //관리자
+                    }
                 }else{
                     Toast.makeText(getBaseContext(), "Firebase 로그인 실패",
                             Toast.LENGTH_LONG).show();
@@ -154,17 +158,17 @@ public class LoginActivity extends AppCompatActivity {
     }  //end firebaseAuthWithGoogle()
 
     //게시판 메인 화면으로 이동한다
-    private void goMainActivity(){
+    private void goUserMainActivity(){
         Intent i = new Intent(this, UserMainActivity.class);
         startActivity(i);
         finish();
-    }  // end goMainActivity
+    }  // end goUserMainActivity
 
-    private void goJoinActivity(){
-        Intent i = new Intent(this, JoinActivity.class);
+    private void goAdminMainActivity(){
+        Intent i = new Intent(this, AdminMainActivity.class);
         startActivity(i);
         finish();
-    }
+    } // end goAdminMainActivity
 
 
 
