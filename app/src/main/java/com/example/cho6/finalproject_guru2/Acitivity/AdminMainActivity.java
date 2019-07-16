@@ -23,9 +23,11 @@ import android.widget.TextView;
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.Database.FileDB;
+import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -37,17 +39,40 @@ public class AdminMainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
 
-    public static ListView mLstVote;
-    public static final int SAVE=1001;
+    private ListView mListView;
     //원본 데이터
-    List<VoteBean> voteList=new ArrayList<>();
+    private List<VoteBean> mVoteList = new ArrayList<>();
     //어뎁터 생성및 적용
-    ListAdapter adapter;
+    private VoteAdapter mVoteAdapter;
 
     @Override
     public void onResume() {
         super.onResume();
 
+        VoteBean voteBean = new VoteBean();
+        mFirebaseDB.getReference().child("votes").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //데이터를 받아와서 List에 저장
+                mVoteList.clear();
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    VoteBean bean = snapshot.getValue(VoteBean.class);
+                    mVoteList.add(0, bean);
+                }
+                //바뀐 데이터로 refresh 한다
+                if(mVoteAdapter != null){
+                    mVoteAdapter.notifyDataSetChanged();;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+
+        });
 
     }
 
@@ -57,6 +82,7 @@ public class AdminMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
 
+        mListView = findViewById(R.id.LstAdmin);
 
         Button mbtnNewVote=findViewById(R.id.btnNewVote);
         ImageButton mbtnSetting=findViewById(R.id.btnSetting);
@@ -64,6 +90,10 @@ public class AdminMainActivity extends AppCompatActivity {
         //투표 만들기 버튼 클릭 이벤트 실행코드
         mbtnNewVote.setOnClickListener(mbtnNewVoteClick);
         mbtnSetting.setOnClickListener(mbtnSettingClick);
+
+        //최초 데이터 세팅
+        mVoteAdapter = new VoteAdapter(this, mVoteList);
+        mListView.setAdapter(mVoteAdapter);
     }
 
     //투표 만들기 버튼 클릭 이벤트
