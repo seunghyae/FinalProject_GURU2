@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.cho6.finalproject_guru2.Bean.MemberBean;
+import com.example.cho6.finalproject_guru2.Firebase.MemberAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -22,6 +24,14 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.lang.reflect.Member;
+import java.util.List;
+import java.util.UUID;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     //FireBase 인증객체
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
+    private List<MemberBean> mMemberList;
+    private MemberAdapter mMemberAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,9 +120,51 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onResume();
 
+        //데이터 취득
+        String userEmail = mFirebaseAuth.getCurrentUser().getEmail();
+        String uuid = getUserIdFromUUID(userEmail);
+        mFirebaseDB.getReference().child("member").child(uuid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //데이터를 받아와서 List에 저장
+                mMemberList.clear();
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    MemberBean bean = snapshot.getValue(MemberBean.class);
+                    mMemberList.add(0,bean);
+                }
+
+                //바뀐 데이터로 Refresh
+                if(mMemberAdapter != null){
+                    mMemberAdapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
         if(mFirebaseAuth.getCurrentUser() != null && mFirebaseAuth.getCurrentUser().getEmail()!= null){
             Toast.makeText(this, "로그인 성공 - 메인화면 이동", Toast.LENGTH_LONG).show();
             goMainActivity();
         }
+
     }
+
+    public static String getUserIdFromUUID(String userEmail) {
+        long val = UUID.nameUUIDFromBytes(userEmail.getBytes()).getMostSignificantBits();
+        return String.valueOf(val);
+    }
+
 }
