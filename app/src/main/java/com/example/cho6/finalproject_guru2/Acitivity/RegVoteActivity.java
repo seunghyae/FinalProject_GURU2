@@ -35,6 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.UUID;
 
 public class RegVoteActivity extends AppCompatActivity {
 
@@ -43,13 +44,12 @@ public class RegVoteActivity extends AppCompatActivity {
     TextView mTxtDate;
     TextView mTxtTime;
     EditText mEdtTitle, mEdtDetail, mItem1, mItem2;
-    Button mBtnReg, mBtnChangeTime, mBtnChangeDate;
+    Button mBtnChangeTime, mBtnChangeDate;
     Switch mSwitchPublic;
     CheckBox mCheckOverlap;
 
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
     private static FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-
 
 
     @Override
@@ -60,6 +60,8 @@ public class RegVoteActivity extends AppCompatActivity {
         //텍스트뷰 두개 연결
         mTxtDate=(TextView)findViewById(R.id.txtDate);
         mTxtTime=(TextView)findViewById(R.id.txtTime);
+        mSwitchPublic = findViewById(R.id.switchPublic);
+        mCheckOverlap = findViewById(R.id.checkBox);
 
         //객체 선언
         mEdtTitle = findViewById(R.id.edtTitle);
@@ -67,15 +69,21 @@ public class RegVoteActivity extends AppCompatActivity {
         mItem1 = findViewById(R.id.item1);
         mItem2 = findViewById(R.id.item2);
 
-        mBtnReg = findViewById(R.id.btnReg);
+        Button mBtnReg = findViewById(R.id.btnReg);
         mBtnChangeDate = findViewById(R.id.btnChangeDate);
         mBtnChangeTime = findViewById(R.id.btnChangeTime);
 
         mBtnChangeDate.setOnClickListener(mClicks);
         mBtnChangeTime.setOnClickListener(mClicks);
-        mBtnReg.setOnClickListener(mClicks);
+        mBtnReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(RegVoteActivity.this, "onClick...", Toast.LENGTH_LONG).show();
+                addVote();
+            }
+        });
 
-        mSwitchPublic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+       /* mSwitchPublic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b == true)
@@ -88,8 +96,7 @@ public class RegVoteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "중복응답이 허용되었습니다.", Toast.LENGTH_LONG).show();
             }
-        });
-
+        });*/
 
         //현재 날짜와 시간을 가져오기 위한 Calandar 인스턴스 선언
         Calendar cal=new GregorianCalendar();
@@ -116,9 +123,7 @@ public class RegVoteActivity extends AppCompatActivity {
                     //리스너 등록
                     new TimePickerDialog(RegVoteActivity.this, mTimeSetListner, mHour, mMinute, false).show();
                     break;
-                case R.id.btnReg:
-                    addVote();
-                    break;
+
             }
         }
 
@@ -156,6 +161,7 @@ public class RegVoteActivity extends AppCompatActivity {
     }
 
     public void addVote(){
+        Toast.makeText(this, "addVote()실행", Toast.LENGTH_LONG).show();
 
         VoteBean voteBean = new VoteBean();
         //데이터베이스에 저장한다.
@@ -173,23 +179,15 @@ public class RegVoteActivity extends AppCompatActivity {
             voteBean.overlap = true;
         }
 
-        uploadVote(voteBean);
-    }
-
-    public void uploadVote(VoteBean voteBean){
         //Firebase 데이터베이스에 투표를 등록한다.
         DatabaseReference dbRef = mFirebaseDatabase.getReference();
         dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+        Toast.makeText(this, "Firebase에 올림", Toast.LENGTH_LONG).show();
+
     }
 
-
-
-
-
-
-
-
-
-
-
+    public static String getUserIdFromUUID(String userEmail) {
+        long val = UUID.nameUUIDFromBytes(userEmail.getBytes()).getMostSignificantBits();
+        return String.valueOf(val);
+    }
 }
