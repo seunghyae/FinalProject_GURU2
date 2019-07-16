@@ -4,6 +4,7 @@ import java.lang.reflect.Member;
 import java.util.List;
 
 public class MemberBean {
+    public String Id;
     public String memId;
     public String memName;
     public String memMajor;

@@ -1,40 +1,55 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.UUID;
 
 public class JoinActivity extends AppCompatActivity {
 
-    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-
-
-    TextView mtxtId = findViewById(R.id.txtId);
-    EditText mEdtName = findViewById(R.id.edtName);
-    EditText mEdtMajor = findViewById(R.id.edtMajor);
-    EditText mEdtNum = findViewById(R.id.edtNum);
-
-    Button mBtnJoin = findViewById(R.id.btnJoin);
+    private static FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+    private TextView mTxtId;
+    private EditText mEdtName, mEdtMajor, mEdtNum;
+    private String email;
+    private String IdToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
-        mtxtId.setText(mFirebaseAuth.getCurrentUser().getEmail());
+        Intent intent = getIntent();
+        IdToken = intent.getStringExtra("tokenId");
+        email = intent.getStringExtra("email");
+
+        mTxtId = findViewById(R.id.txtId);
+        mEdtName = findViewById(R.id.edtName);
+        mEdtMajor = findViewById(R.id.edtMajor);
+        mEdtNum = findViewById(R.id.edtNum);
+        Button mBtnJoin = findViewById(R.id.btnJoin);
+
+        mTxtId.setText(email);
 
         mBtnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,43 +57,58 @@ public class JoinActivity extends AppCompatActivity {
                 joinProcess();
             }
         });
+
     } //end onCreate()
 
     //회원가입 처리
     private void joinProcess() {
-
-        //Firebase 데이터베이스에 메모를 등록한다.
-        DatabaseReference dbRef = mFirebaseDatabase.getReference();
-        String id = dbRef.push().getKey(); // key 를 메모의 고유 ID 로 사용한다.
-
+        MemberBean memberBean = new MemberBean();
         //데이터베이스에 저장한다.
-        BoardBean boardBean = new BoardBean();
-        boardBean.id = id;
-        boardBean.userId = mFirebaseAuth.getCurrentUser().getEmail();
-        boardBean.title = "메모 title";
-        boardBean.contents = mEdtMemo.getText().toString();
-        boardBean.imgUrl = imgUrl;
-        boardBean.imgName = imgName;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        boardBean.date = sdf.format(new Date());
+        memberBean.memId = getUserIdFromUUID(email);
+        memberBean.isAdmin = false;
+        memberBean.memName = mEdtName.getText().toString();
+        memberBean.memMajor = mEdtMajor.getText().toString();
+        memberBean.memNum = mEdtNum.getText().toString();
 
-        //고유번호를 생성한다
-        String guid = getUserIdFromUUID(boardBean.userId);
-        dbRef.child("memo").child( guid ).child( boardBean.id ).setValue(boardBean);
-        Toast.makeText(this, "게시물이 등록 되었습니다.", Toast.LENGTH_LONG).show();
-        finish();
-
-        //회원가입 완료
-        Toast.makeText(this, "회원가입이 완료 되었습니다.", Toast.LENGTH_LONG).show();
-        finish();
+        uploadMember(memberBean);
     }
 
+    public void uploadMember(MemberBean memberBean){
+        //Firebase 데이터베이스에 메모를 등록한다.
+        DatabaseReference dbRef = mFirebaseDatabase.getReference();
+        dbRef.child("members").child( memberBean.memId ).setValue(memberBean);
+        //파이어 베이스 인증
+        firebaseAuthWithGoogle(IdToken);
+    }
+
+    private void firebaseAuthWithGoogle(String idToken){
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mFirebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(getBaseContext(), "Firebase 로그인 성공",
+                            Toast.LENGTH_LONG).show();
+
+                    goMainActivity();
+                }else{
+                    Toast.makeText(getBaseContext(), "Firebase 로그인 실패",
+                            Toast.LENGTH_LONG).show();
+                    Log.w("Test","인증실패: "+task.getException());
+                }
+            }
+        });
+    }  //end firebaseAuthWithGoogle()
 
 
+    private void goMainActivity(){
+        Intent i = new Intent(this, UserMainActivity.class);
+        startActivity(i);
+        finish();
+    }  // end goMainActivity
 
-
-
-
-
-
+    public static String getUserIdFromUUID(String userEmail) {
+        long val = UUID.nameUUIDFromBytes(userEmail.getBytes()).getMostSignificantBits();
+        return String.valueOf(val);
+    }
 }

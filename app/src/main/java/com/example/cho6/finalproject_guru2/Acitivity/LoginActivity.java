@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
+import com.example.cho6.finalproject_guru2.Database.FileDB;
 import com.example.cho6.finalproject_guru2.Firebase.MemberAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -64,6 +66,18 @@ public class LoginActivity extends AppCompatActivity {
 
     } //end onCreate()
 
+
+    protected void onResume() {
+
+        super.onResume();
+
+//        if(mFirebaseAuth.getCurrentUser() != null && mFirebaseAuth.getCurrentUser().getEmail()!= null ){
+//            Toast.makeText(this, "로그인 성공 - 메인화면 이동", Toast.LENGTH_LONG).show();
+//            goMainActivity();
+//        }
+
+    }
+
     private void googleSignIn(){
         Intent i = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(i, 1004);
@@ -77,13 +91,38 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 //구글 로그인 성공
-                GoogleSignInAccount account = task.getResult(ApiException.class);
+                final GoogleSignInAccount account = task.getResult(ApiException.class);
                 Toast.makeText(getBaseContext(), "로그인에 성공 하였습니다.", Toast.LENGTH_LONG).show();
 
+                final String loginedEmail = account.getEmail();
 
-                //Firebase 인증
-                firebaseAuthWithGoogle(account);
+                //DB 에서 이메일 조회
+                mFirebaseDB.getReference().child("members").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            MemberBean bean = snapshot.getValue(MemberBean.class);
+                            if(TextUtils.equals(bean.memId, getUserIdFromUUID(loginedEmail))) {
+                                //FileDB memberBean 값을 저장
+                                FileDB.setLoginMember(getApplicationContext(),bean);
+                                //Firebase 인증
+                                firebaseAuthWithGoogle(account);
+                                break;
+                            }
+
+                        }
+
+                        //회원가입 Activity 로 이동
+                        Intent i = new Intent(LoginActivity.this, JoinActivity.class);
+                        i.putExtra("email", loginedEmail);
+                        i.putExtra("tokenId", account.getIdToken());
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                });
 
             } catch (ApiException e) {
                 e.printStackTrace();
@@ -99,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Toast.makeText(getBaseContext(), "Firebase 로그인 성공",
                             Toast.LENGTH_LONG).show();
+
                     goMainActivity();
                 }else{
                     Toast.makeText(getBaseContext(), "Firebase 로그인 실패",
@@ -116,51 +156,13 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }  // end goMainActivity
 
-    protected void onResume() {
-
-        super.onResume();
-
-        //데이터 취득
-        String userEmail = mFirebaseAuth.getCurrentUser().getEmail();
-        String uuid = getUserIdFromUUID(userEmail);
-        mFirebaseDB.getReference().child("member").child(uuid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //데이터를 받아와서 List에 저장
-                mMemberList.clear();
-
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    MemberBean bean = snapshot.getValue(MemberBean.class);
-                    mMemberList.add(0,bean);
-                }
-
-                //바뀐 데이터로 Refresh
-                if(mMemberAdapter != null){
-                    mMemberAdapter.notifyDataSetChanged();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-
-
-
-
-
-
-        if(mFirebaseAuth.getCurrentUser() != null && mFirebaseAuth.getCurrentUser().getEmail()!= null){
-            Toast.makeText(this, "로그인 성공 - 메인화면 이동", Toast.LENGTH_LONG).show();
-            goMainActivity();
-        }
-
+    private void goJoinActivity(){
+        Intent i = new Intent(this, JoinActivity.class);
+        startActivity(i);
+        finish();
     }
+
+
 
     public static String getUserIdFromUUID(String userEmail) {
         long val = UUID.nameUUIDFromBytes(userEmail.getBytes()).getMostSignificantBits();
