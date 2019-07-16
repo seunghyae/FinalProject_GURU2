@@ -8,5 +8,8 @@ public class VoteBean {
     public String voteTitle;
     public String voteSubTitle;
     public String voteDate;
+    public String voteTime;
+    public boolean Lock = false;
+    public boolean overlap = false;
     public List<ChoiceBean> ChoiceList;
 }
