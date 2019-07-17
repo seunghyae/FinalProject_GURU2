@@ -44,8 +44,8 @@ public class VoteAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.view_vote_admin, null);
 
-         TextView txtVote = view.findViewById(R.id.txtVoteName);
-        TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
+        TextView txtVote = view.findViewById(R.id.txtVoteName);
+        TextView txtVoteEx = view.findViewById(R.id.txtEx);
         TextView txtDate = view.findViewById(R.id.txtDate);
         Button btnStartVote = view.findViewById(R.id.btnStartVote);
         Button btnFinishVote = view.findViewById(R.id.btnFinishVote);
@@ -56,6 +56,8 @@ public class VoteAdapter extends BaseAdapter {
         txtVote.setText(voteBean.voteTitle);
         txtDate.setText(voteBean.voteDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
+
+
 
         return view;
     }

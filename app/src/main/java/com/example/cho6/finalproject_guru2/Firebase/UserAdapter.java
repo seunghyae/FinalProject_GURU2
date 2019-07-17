@@ -1,6 +1,7 @@
 package com.example.cho6.finalproject_guru2.Firebase;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.cho6.finalproject_guru2.Acitivity.VoteActivity;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
 
@@ -45,17 +47,27 @@ public class UserAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.view_vote_user, null);
 
         TextView txtVote = view.findViewById(R.id.txtVoteName);
-        TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
+        TextView txtVoteEx = view.findViewById(R.id.txtEx);
         TextView txtDate = view.findViewById(R.id.txtDate);
-        Button btnStartVote = view.findViewById(R.id.btnStartVote);
-        Button btnFinishVote = view.findViewById(R.id.btnFinishVote);
-        Button btnShowVote = view.findViewById(R.id.btnShowVote);
+        Button btnVote = view.findViewById(R.id.btnVote);
+        Button btnShowResult = view.findViewById(R.id.btnShowResult);
 
         final VoteBean voteBean = mVoteList.get(i);
 
         txtVote.setText(voteBean.voteTitle);
         txtDate.setText(voteBean.voteDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
+
+        btnVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mContext, VoteActivity.class);
+                i.putExtra("voteTitle", voteBean.voteTitle);
+                i.putExtra("voteEx", voteBean.voteSubTitle);
+                mContext.startActivity(i);
+            }
+
+        });
 
         return view;
     }

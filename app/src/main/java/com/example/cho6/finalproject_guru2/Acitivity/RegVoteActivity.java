@@ -182,8 +182,7 @@ public class RegVoteActivity extends AppCompatActivity {
         //Firebase 데이터베이스에 투표를 등록한다.
         DatabaseReference dbRef = mFirebaseDatabase.getReference();
         dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
-        Toast.makeText(this, "Firebase에 올림", Toast.LENGTH_LONG).show();
-
+        finish();
     }
 
     public static String getUserIdFromUUID(String userEmail) {

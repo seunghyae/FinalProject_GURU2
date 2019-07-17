@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/txtVoteTitle"
+        android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtVoteEx"
+        android:id="@+id/txtEx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.455"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtVoteTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
     <ImageView
         android:id="@+id/imgVote"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtVoteEx"
+        app:layout_constraintTop_toBottomOf="@+id/txtEx"
         tools:srcCompat="@tools:sample/avatars[2]" />
 
     <Button
@@ -54,6 +54,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:text="제출하기"
+        android:background="@drawable/btn_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imgVote">
 
         <ListView
-            android:id="@+id/lstVote"
+            android:id="@+id/lstChoice"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

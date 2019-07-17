@@ -39,7 +39,6 @@ public class UserMainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        VoteBean voteBean = new VoteBean();
         mFirebaseDB.getReference().child("votes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

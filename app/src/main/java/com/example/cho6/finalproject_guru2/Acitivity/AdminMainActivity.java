@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminMainActivity extends AppCompatActivity {
-    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
 
     private ListView mListView;
@@ -49,7 +48,6 @@ public class AdminMainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        VoteBean voteBean = new VoteBean();
         mFirebaseDB.getReference().child("votes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
