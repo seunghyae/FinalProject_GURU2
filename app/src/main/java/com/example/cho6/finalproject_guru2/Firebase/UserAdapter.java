@@ -73,26 +73,29 @@ public class UserAdapter extends BaseAdapter {
         btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Dialog dlg = new Dialog(mContext);
-                dlg.setContentView(R.layout.view_custom_dialog);
-                dlg.show();
-                final EditText edtCode = dlg.findViewById(R.id.edtCode);
-                Button btnOk = dlg.findViewById(R.id.btnOK);
-                btnOk.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String code = edtCode.getText().toString();
-                        if(TextUtils.equals(voteBean.voteDate, code) ) {
-                            Intent i =new Intent(mContext, VoteActivity.class);
-                            i.putExtra("voteBean", voteBean);
-                            mContext.startActivity(i);
+                if( TextUtils.isEmpty(voteBean.voteCode) ){
+                    Intent i=new Intent(mContext,VoteActivity.class);
+                    mContext.startActivity(i);
+                }else{
+                    Dialog dlg = new Dialog(mContext);
+                    dlg.setContentView(R.layout.view_custom_dialog);
+                    dlg.show();
+                    final EditText edtCode = dlg.findViewById(R.id.edtCode);
+                    Button btnOk = dlg.findViewById(R.id.btnOK);
+                    btnOk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String code = edtCode.getText().toString();
+                            if(TextUtils.equals(voteBean.voteCode, code) ) {
+                                Intent i =new Intent(mContext, VoteActivity.class);
+                                mContext.startActivity(i);
+                            }
+                            else {
+                                Toast.makeText(mContext, "코드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else {
-                            Toast.makeText(mContext, "코드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
+                }
             }
         });
 

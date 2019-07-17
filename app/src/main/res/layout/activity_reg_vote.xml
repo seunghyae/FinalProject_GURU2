@@ -154,7 +154,7 @@
         android:ems="10"
         android:hint="참여코드"
         android:inputType="textPersonName"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btnReg"
