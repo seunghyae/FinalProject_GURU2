@@ -179,6 +179,9 @@ public class RegVoteActivity extends AppCompatActivity {
             voteBean.overlap = true;
         }
 
+        voteBean.startVote = false;
+
+
         //Firebase 데이터베이스에 투표를 등록한다.
         DatabaseReference dbRef = mFirebaseDatabase.getReference();
         dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);

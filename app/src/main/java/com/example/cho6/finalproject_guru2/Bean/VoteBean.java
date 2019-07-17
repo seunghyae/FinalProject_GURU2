@@ -12,4 +12,6 @@ public class VoteBean {
     public boolean Lock = false;
     public boolean overlap = false;
     public List<ChoiceBean> ChoiceList;
+    public boolean startVote = false;
+
 }

@@ -1,13 +1,16 @@
 package com.example.cho6.finalproject_guru2.Firebase;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.cho6.finalproject_guru2.Acitivity.VoteActivity;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
 
@@ -57,8 +60,12 @@ public class VoteAdapter extends BaseAdapter {
         txtDate.setText(voteBean.voteDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
 
-
-
+        btnStartVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                voteBean.startVote = true;
+            }
+        });
         return view;
     }
 }
