@@ -14,4 +14,6 @@ public class VoteBean {
     public List<ChoiceBean> ChoiceList;
     public boolean startVote = false;
 
+    public long startVoteMilli;
+    public long endVoteMilli;
 }

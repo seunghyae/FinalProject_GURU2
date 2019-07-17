@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.UUID;
@@ -145,8 +146,8 @@ public class RegVoteActivity extends AppCompatActivity {
             };
 
     void UpdateNow(){
-        mTxtDate.setText(String.format("%d/%d/%d",mYear,mMonth+1,mDay));
-        mTxtTime.setText(String.format("%d:%d",mHour,mMinute));
+        mTxtDate.setText(String.format("%d-%02d-%02d",mYear,mMonth+1,mDay));
+        mTxtTime.setText(String.format("%d:%d:00",mHour,mMinute));
     }
 
     public void addVote(){
@@ -159,6 +160,16 @@ public class RegVoteActivity extends AppCompatActivity {
         voteBean.voteDate = mTxtDate.getText().toString();
         voteBean.voteTime = mTxtTime.getText().toString();
         voteBean.voteID = System.currentTimeMillis();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            //시작시간 TODO 바꿀껏!
+            voteBean.startVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
+            //종료시간
+            voteBean.endVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         ChoiceBean choiceBean = new ChoiceBean();
         choiceBean.item1 = mItem1.getText().toString();
