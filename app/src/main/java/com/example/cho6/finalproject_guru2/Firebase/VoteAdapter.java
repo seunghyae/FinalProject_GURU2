@@ -51,7 +51,7 @@ public class VoteAdapter extends BaseAdapter {
         TextView txtVote = view.findViewById(R.id.txtVoteName);
         TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
         TextView txtDate = view.findViewById(R.id.txtDate);
-        Button btnStartVote = view.findViewById(R.id.btnStartVote);
+        final Button btnStartVote = view.findViewById(R.id.btnStartVote);
         Button btnFinishVote = view.findViewById(R.id.btnFinishVote);
         Button btnShowVote = view.findViewById(R.id.btnShowVote);
 
@@ -65,6 +65,9 @@ public class VoteAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 voteBean.startVote = true;
+
+                if(voteBean.startVote == true)
+                btnStartVote.setVisibility(View.INVISIBLE);
 
                 DatabaseReference dbRef = mFirebaseDatabase.getReference();
                 dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
