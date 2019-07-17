@@ -137,7 +137,6 @@ public class RegVoteActivity extends AppCompatActivity {
 
     };
 
-
     //날짜 대화상자 리스너 부분
     DatePickerDialog.OnDateSetListener mDateSetListner=
             new DatePickerDialog.OnDateSetListener() {
@@ -208,6 +207,10 @@ public class RegVoteActivity extends AppCompatActivity {
         }
 
         voteBean.startVote = false;
+
+        if(mEdtCode!=null){
+            voteBean.voteCode=mEdtCode.getText().toString();
+        }
 
 
         //Firebase 데이터베이스에 투표를 등록한다.

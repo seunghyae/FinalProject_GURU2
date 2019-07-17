@@ -14,6 +14,7 @@ public class VoteBean implements Serializable {
     public boolean overlap = false;
     public List<ChoiceBean> ChoiceList;
     public boolean startVote = false;
+    public String voteCode;
 
     public long startVoteMilli;
     public long endVoteMilli;
