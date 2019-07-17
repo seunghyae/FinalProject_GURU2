@@ -20,10 +20,10 @@
             android:id="@+id/VoteTitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="8"
+            android:layout_weight="8.2"
             android:gravity="center"
-            android:text="진행중인 투표"
-            android:textColor="#070707"
+            android:text="투표 관리"
+            android:textColor="#EE2752"
             android:textSize="36sp"
             android:textStyle="bold" />
 
@@ -31,7 +31,8 @@
             android:id="@+id/btnSetting"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1.8"
+            android:background="#FAFAFA"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/setting" />
 

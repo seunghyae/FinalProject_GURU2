@@ -8,8 +8,10 @@ public class VoteBean implements Serializable {
     public String votePicPath;
     public String voteTitle;
     public String voteSubTitle;
-    public String voteDate;
-    public String voteTime;
+    public String voteStartDate;
+    public String voteStartTime;
+    public String voteEndDate;
+    public String voteEndTime;
     public boolean Lock = false;
     public boolean overlap = false;
     public List<ChoiceBean> ChoiceList;

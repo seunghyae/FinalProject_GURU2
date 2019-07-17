@@ -3,6 +3,8 @@ package com.example.cho6.finalproject_guru2.Firebase;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,16 +55,19 @@ public class UserAdapter extends BaseAdapter {
 
         TextView txtVote = view.findViewById(R.id.txtVoteName);
         TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
-        TextView txtDate = view.findViewById(R.id.txtDate);
+        TextView txtStartDate = view.findViewById(R.id.txtDate);
         Button btnVote = view.findViewById(R.id.btnVote);
         Button btnShowResult = view.findViewById(R.id.btnShowResult);
+
 
 
         final VoteBean voteBean = mVoteList.get(i);
 
         txtVote.setText(voteBean.voteTitle);
-        txtDate.setText(voteBean.voteDate);
+        txtStartDate.setText(voteBean.voteStartDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
+
+
 
         btnShowResult.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +81,7 @@ public class UserAdapter extends BaseAdapter {
             public void onClick(View view) {
                 if( TextUtils.isEmpty(voteBean.voteCode) ){
                     Intent i=new Intent(mContext,VoteActivity.class);
+                    i.putExtra("voteBean",voteBean);
                     mContext.startActivity(i);
                 }else{
                     Dialog dlg = new Dialog(mContext);
@@ -88,6 +95,7 @@ public class UserAdapter extends BaseAdapter {
                             String code = edtCode.getText().toString();
                             if(TextUtils.equals(voteBean.voteCode, code) ) {
                                 Intent i =new Intent(mContext, VoteActivity.class);
+                                i.putExtra("voteBean",voteBean);
                                 mContext.startActivity(i);
                             }
                             else {

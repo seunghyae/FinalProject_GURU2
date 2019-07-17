@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -34,14 +35,14 @@ public class RegVoteActivity extends AppCompatActivity {
 
     //객체 선언
     int mYear,mMonth,mDay,mHour,mMinute;
-    TextView mTxtDate;
-    TextView mTxtTime;
+    TextView mTxtStartDate, mTxtStartTime, mTxtEndDate, mTxtEndTime;
     EditText mEdtTitle, mEdtDetail, mItem1, mItem2;
-    Button mBtnChangeTime, mBtnChangeDate, mBtnReg;
+    Button mBtnStartDate, mBtnStartTime, mBtnEndDate, mBtnEndTime, mBtnReg;
     Switch mSwitchPublic;
     CheckBox mCheckOverlap;
     Context mContext;
     EditText mEdtCode;
+    ImageView mImgLock;
 
 
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -51,11 +52,19 @@ public class RegVoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reg_vote);
+        setContentView(R.layout.activity_reg_vote2);
 
         //텍스트뷰 두개 연결
-        mTxtDate=(TextView)findViewById(R.id.txtDate);
-        mTxtTime=(TextView)findViewById(R.id.txtTime);
+        mBtnStartDate = findViewById(R.id.btnStartDate);
+        mBtnStartTime = findViewById(R.id.btnStartTime);
+        mBtnEndDate = findViewById(R.id.btnEndDate);
+        mBtnEndTime = findViewById(R.id.btnEndTime);
+
+        mTxtStartDate = findViewById(R.id.txtStartDate);
+        mTxtStartTime = findViewById(R.id.txtStartTime);
+        mTxtEndDate = findViewById(R.id.txtEndDate);
+        mTxtEndTime = findViewById(R.id.txtEndTime);
+
         mSwitchPublic = findViewById(R.id.switchPublic);
         mCheckOverlap = findViewById(R.id.checkBox);
 
@@ -67,11 +76,14 @@ public class RegVoteActivity extends AppCompatActivity {
         mEdtCode=findViewById(R.id.edtCode);
 
         mBtnReg = findViewById(R.id.btnReg);
-        mBtnChangeDate = findViewById(R.id.btnChangeDate);
-        mBtnChangeTime = findViewById(R.id.btnChangeTime);
+        mImgLock = findViewById(R.id.imgLock);
 
-        mBtnChangeDate.setOnClickListener(mClicks);
-        mBtnChangeTime.setOnClickListener(mClicks);
+        mBtnStartDate.setOnClickListener(mClicks);
+        mBtnStartTime.setOnClickListener(mClicks);
+        mBtnEndDate.setOnClickListener(mClicks);
+        mBtnEndTime.setOnClickListener(mClicks);
+
+
         mBtnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +126,7 @@ public class RegVoteActivity extends AppCompatActivity {
         mHour=cal.get(Calendar.HOUR_OF_DAY);
         mMinute=cal.get(Calendar.MINUTE);
 
-        UpdateNow();
+       // UpdateNow();
     } //end onCreate()
 
     private View.OnClickListener mClicks = new View.OnClickListener() {
@@ -122,23 +134,27 @@ public class RegVoteActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 //날짜 대화상자 버튼이 눌리면 대화상자를 보여줌
-                case R.id.btnChangeDate:
+                case R.id.btnStartDate:
                     //리스너 등록
-                    new DatePickerDialog(RegVoteActivity.this, mDateSetListner, mYear, mMonth, mDay).show();
+                    new DatePickerDialog(RegVoteActivity.this, mStartDateSetListner, mYear, mMonth, mDay).show();
                     break;
-
-                case R.id.btnChangeTime:
+                case R.id.btnStartTime:
                     //리스너 등록
-                    new TimePickerDialog(RegVoteActivity.this, mTimeSetListner, mHour, mMinute, false).show();
+                    new TimePickerDialog(RegVoteActivity.this, mStartTimeSetListner, mHour, mMinute, false).show();
                     break;
-
+                case R.id.btnEndDate:
+                    new DatePickerDialog(RegVoteActivity.this, mEndDateSetListner, mYear, mMonth, mDay).show();
+                    break;
+                case R.id.btnEndTime:
+                    new TimePickerDialog(RegVoteActivity.this, mEndTimeSetListner, mHour, mMinute, false).show();
+                    break;
             }
         }
 
     };
 
     //날짜 대화상자 리스너 부분
-    DatePickerDialog.OnDateSetListener mDateSetListner=
+    DatePickerDialog.OnDateSetListener mStartDateSetListner=
             new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -146,11 +162,11 @@ public class RegVoteActivity extends AppCompatActivity {
                     mMonth=monthOfYear;
                     mDay=dayOfMonth;
                     //텍스트 뷰의 값 업테이트
-                    UpdateNow();
+                    UpdateStart();
                 }
             };
     //시간 대화상자 리스너 부분
-    TimePickerDialog.OnTimeSetListener mTimeSetListner=
+    TimePickerDialog.OnTimeSetListener mStartTimeSetListner=
             new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourofDay, int minute) {
@@ -158,14 +174,43 @@ public class RegVoteActivity extends AppCompatActivity {
                     mHour=hourofDay;
                     mMinute=minute;
 
-                    UpdateNow();
+                    UpdateStart();
                 }
             };
 
-    void UpdateNow(){
-        mTxtDate.setText(String.format("%d-%02d-%02d",mYear,mMonth+1,mDay));
-        mTxtTime.setText(String.format("%d:%d:00",mHour,mMinute));
+    //날짜 대화상자 리스너 부분
+    DatePickerDialog.OnDateSetListener mEndDateSetListner=
+            new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    mYear=year;
+                    mMonth=monthOfYear;
+                    mDay=dayOfMonth;
+                    //텍스트 뷰의 값 업테이트
+                    UpdateEnd();
+                }
+            };
+    //시간 대화상자 리스너 부분
+    TimePickerDialog.OnTimeSetListener mEndTimeSetListner=
+            new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker view, int hourofDay, int minute) {
+                    //사용자가 입력한 값 가져옴
+                    mHour=hourofDay;
+                    mMinute=minute;
+
+                    UpdateEnd();
+                }
+            };
+
+    void UpdateStart() {
+        mTxtStartDate.setText(String.format("%d-%02d-%02d", mYear, mMonth + 1, mDay));
+        mTxtStartTime.setText(String.format("%d:%d:00", mHour, mMinute));
     }
+
+    void UpdateEnd(){
+        mTxtEndDate.setText(String.format("%d-%02d-%02d",mYear,mMonth+1,mDay));
+        mTxtEndTime.setText(String.format("%d:%d:00",mHour,mMinute));    }
 
     public void addVote(){
         Toast.makeText(this, "addVote()실행", Toast.LENGTH_LONG).show();
@@ -174,17 +219,27 @@ public class RegVoteActivity extends AppCompatActivity {
         //데이터베이스에 저장한다.
         voteBean.voteTitle = mEdtTitle.getText().toString();
         voteBean.voteSubTitle = mEdtDetail.getText().toString();
-        voteBean.voteDate = mTxtDate.getText().toString();
-        voteBean.voteTime = mTxtTime.getText().toString();
+        voteBean.voteStartDate = mTxtStartDate.getText().toString();
+        voteBean.voteStartTime = mTxtStartTime.getText().toString();
+        voteBean.voteEndDate = mTxtEndDate.getText().toString();
+        voteBean.voteEndTime = mTxtEndTime.getText().toString();
         voteBean.voteID = System.currentTimeMillis();
+
+        if(mSwitchPublic.isChecked()){
+            voteBean.Lock = true;
+            mImgLock.setVisibility(View.VISIBLE);
+        }else {
+            voteBean.Lock = false;
+            mImgLock.setVisibility(View.INVISIBLE);
+        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             //시작시간 TODO 바꿀 것!
-            voteBean.startVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
+            voteBean.startVoteMilli = sdf.parse(voteBean.voteStartDate + " " + voteBean.voteStartTime).getTime();
             //voteBean.startVoteMilli = System.currentTimeMillis();
             //종료시간
-            voteBean.endVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
+            voteBean.endVoteMilli = sdf.parse(voteBean.voteEndDate + " " + voteBean.voteEndTime).getTime();
 
             if(voteBean.endVoteMilli < voteBean.startVoteMilli) {
                 Toast.makeText(this,"투표 종료 시점이 올바르지 않습니다.", Toast.LENGTH_LONG).show();
