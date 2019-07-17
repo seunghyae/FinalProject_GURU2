@@ -2,6 +2,7 @@ package com.example.cho6.finalproject_guru2.Acitivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
+import com.example.cho6.finalproject_guru2.Database.FileDB;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +39,7 @@ public class RegVoteActivity extends AppCompatActivity {
     Button mBtnChangeTime, mBtnChangeDate;
     Switch mSwitchPublic;
     CheckBox mCheckOverlap;
+    Context mContext;
 
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
     private static FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
@@ -80,7 +83,6 @@ public class RegVoteActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "비공개 투표로 설정 되었습니다", Toast.LENGTH_LONG).show();
             }
         });
-
         mCheckOverlap.setOnClickListener(new CheckBox.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -190,6 +192,8 @@ public class RegVoteActivity extends AppCompatActivity {
         DatabaseReference dbRef = mFirebaseDatabase.getReference();
         dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
         dbRef.child("votes").child(String.valueOf(voteBean.voteID)).child("choiceList").setValue(choiceBean);
+        dbRef.child("members").child(FileDB.getLoginMember(getBaseContext())).child("voteList").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+        dbRef.child("members").child(FileDB.getLoginMember(getBaseContext())).child("voteList").child(String.valueOf(voteBean.voteID)).child("choiceList").setValue(choiceBean);
         finish();
     }
 

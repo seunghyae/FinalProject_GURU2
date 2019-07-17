@@ -9,6 +9,7 @@ import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +31,11 @@ public class FileDB {
         }
     }
     //로그인한 MemberBean 을 취득한다.
-    public static MemberBean getLoginMember(Context context) {
+    public static String getLoginMember(Context context) {
         String str = getSP(context).getString("loginMemberBean", null);
         if(str == null) return null;
         MemberBean memberBean = mGson.fromJson(str, MemberBean.class);
-        return getFindMember(context,memberBean.memId);
+        return memberBean.memId;
     }
 
     public static MemberBean getFindMember(Context context, String memId) {
