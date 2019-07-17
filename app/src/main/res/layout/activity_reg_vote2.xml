@@ -105,7 +105,7 @@
                 android:text="시작시간설정:" />
 
             <Button
-                android:id="@+id/btnChangeDate"
+                android:id="@+id/btnStartDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
@@ -114,7 +114,7 @@
                 android:textColor="#F5F1F1" />
 
             <Button
-                android:id="@+id/btnChangeTime"
+                android:id="@+id/btnStartTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
@@ -152,7 +152,7 @@
                 android:text="종료시간설정:" />
 
             <Button
-                android:id="@+id/btnChangeDate"
+                android:id="@+id/btnEndDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
@@ -161,7 +161,7 @@
                 android:textColor="#F5F1F1" />
 
             <Button
-                android:id="@+id/btnChangeTime"
+                android:id="@+id/btnEndTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
