@@ -1,8 +1,9 @@
 package com.example.cho6.finalproject_guru2.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class VoteBean {
+public class VoteBean implements Serializable {
     public long voteID;  //고유 번호
     public String votePicPath;
     public String voteTitle;

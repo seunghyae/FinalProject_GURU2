@@ -32,7 +32,7 @@ public class VoteActivity extends AppCompatActivity {
     private List<ChoiceBean> mChoiceList = new ArrayList<>();
     private ChoiceAdapter mChoiceAdapter;
 
-    String voteTitle, voteEx;
+    VoteBean voteBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +45,10 @@ public class VoteActivity extends AppCompatActivity {
         mBtnVoteSubmit = findViewById(R.id.btnVoteSubmit);
         mLstChoice = findViewById(R.id.lstChoice);
 
-        voteTitle = getIntent().getStringExtra("voteTitle");
-        voteEx = getIntent().getStringExtra("voteEx");
+        voteBean = (VoteBean)getIntent().getSerializableExtra("voteBean");
 
-        mTxtTitle.setText(voteTitle);
-        mTxtEx.setText(voteEx);
+        mTxtTitle.setText(voteBean.voteTitle);
+        mTxtEx.setText(voteBean.voteSubTitle);
 
         //최초 데이터 세팅
         mChoiceAdapter = new ChoiceAdapter(this, mChoiceList);

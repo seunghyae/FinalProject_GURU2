@@ -63,17 +63,6 @@ public class UserAdapter extends BaseAdapter {
         txtDate.setText(voteBean.voteDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
 
-        btnVote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(mContext, VoteActivity.class);
-                i.putExtra("voteTitle", voteBean.voteTitle);
-                i.putExtra("voteEx", voteBean.voteSubTitle);
-                mContext.startActivity(i);
-            }
-
-        });
-
         btnShowResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +85,7 @@ public class UserAdapter extends BaseAdapter {
                         String code = edtCode.getText().toString();
                         if(TextUtils.equals(voteBean.voteDate, code) ) {
                             Intent i =new Intent(mContext, VoteActivity.class);
+                            i.putExtra("voteBean", voteBean);
                             mContext.startActivity(i);
                         }
                         else {
