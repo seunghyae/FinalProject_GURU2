@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,14 +54,26 @@ public class UserAdapter extends BaseAdapter {
         TextView txtVote = view.findViewById(R.id.txtVoteName);
         TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
         TextView txtDate = view.findViewById(R.id.txtDate);
-        TextView btnShowResult = view.findViewById(R.id.btnShowResult);
         Button btnVote = view.findViewById(R.id.btnVote);
+        Button btnShowResult = view.findViewById(R.id.btnShowResult);
+
 
         final VoteBean voteBean = mVoteList.get(i);
 
         txtVote.setText(voteBean.voteTitle);
         txtDate.setText(voteBean.voteDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
+
+        btnVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mContext, VoteActivity.class);
+                i.putExtra("voteTitle", voteBean.voteTitle);
+                i.putExtra("voteEx", voteBean.voteSubTitle);
+                mContext.startActivity(i);
+            }
+
+        });
 
         btnShowResult.setOnClickListener(new View.OnClickListener() {
             @Override

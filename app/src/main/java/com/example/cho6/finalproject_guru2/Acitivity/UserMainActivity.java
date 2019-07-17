@@ -24,14 +24,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserMainActivity extends AppCompatActivity {
+
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
 
     private ListView mListView;
+
     //원본 데이터
     private List<VoteBean> mVoteList = new ArrayList<>();
     //어뎁터 생성및 적용
     private UserAdapter mUserAdapter;
+    private VoteBean voteBean;
 
 
     @Override
@@ -60,28 +63,36 @@ public class UserMainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        mFirebaseDB.getReference().child("votes").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //데이터를 받아와서 List에 저장
-                mVoteList.clear();
+        voteBean= new VoteBean();
 
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    VoteBean bean = snapshot.getValue(VoteBean.class);
-                    mVoteList.add(0, bean);
-                }
-                //바뀐 데이터로 refresh 한다
-                if(mUserAdapter != null){
-                    mUserAdapter.notifyDataSetChanged();;
-                }
-            }
+        if(voteBean.startVote == true) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            mFirebaseDB.getReference().child("votes").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    //데이터를 받아와서 List에 저장
+                    mVoteList.clear();
+
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        VoteBean bean = snapshot.getValue(VoteBean.class);
+                        mVoteList.add(0, bean);
+                    }
+                    //바뀐 데이터로 refresh 한다
+                    if (mUserAdapter != null) {
+                        mUserAdapter.notifyDataSetChanged();
+                        ;
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
-    }
+                }
 
-}
+            };
+        }
+
