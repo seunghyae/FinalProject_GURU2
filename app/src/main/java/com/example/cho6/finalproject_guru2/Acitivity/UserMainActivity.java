@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
+import com.example.cho6.finalproject_guru2.Firebase.UserAdapter;
 import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,10 +29,11 @@ public class UserMainActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
 
     private ListView mListView;
+
     //원본 데이터
     private List<VoteBean> mVoteList = new ArrayList<>();
     //어뎁터 생성및 적용
-    private VoteAdapter mVoteAdapter;
+    private UserAdapter mUserAdapter;
 
     @Override
     public void onResume() {
@@ -49,8 +51,8 @@ public class UserMainActivity extends AppCompatActivity {
                     mVoteList.add(0, bean);
                 }
                 //바뀐 데이터로 refresh 한다
-                if(mVoteAdapter != null){
-                    mVoteAdapter.notifyDataSetChanged();;
+                if(mUserAdapter != null){
+                    mUserAdapter.notifyDataSetChanged();;
                 }
             }
 
@@ -67,14 +69,15 @@ public class UserMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mListView=findViewById(R.id.LstUser);
 
         ImageButton mbtnSetting=findViewById(R.id.btnSetting);
         mbtnSetting.setOnClickListener(mbtnSettingClick);
 
         //최초 데이터 세팅
-        mVoteAdapter = new VoteAdapter(this, mVoteList);
-        mListView.setAdapter(mVoteAdapter);
+        mUserAdapter = new UserAdapter(this, mVoteList);
+        mListView.setAdapter(mUserAdapter);
     }
     //설정 버튼 클릭 이벤트
     private View.OnClickListener mbtnSettingClick=new View.OnClickListener() {
