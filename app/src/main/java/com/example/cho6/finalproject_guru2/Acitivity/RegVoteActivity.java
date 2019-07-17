@@ -1,16 +1,11 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -18,21 +13,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.cho6.finalproject_guru2.Bean.MemberBean;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
-import com.example.cho6.finalproject_guru2.Database.FileDB;
 import com.example.cho6.finalproject_guru2.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.UUID;
@@ -171,6 +160,10 @@ public class RegVoteActivity extends AppCompatActivity {
         voteBean.voteTime = mTxtTime.getText().toString();
         voteBean.voteID = System.currentTimeMillis();
 
+        ChoiceBean choiceBean = new ChoiceBean();
+        choiceBean.item1 = mItem1.getText().toString();
+        choiceBean.item2 = mItem2.getText().toString();
+
         if(mSwitchPublic.isChecked()){
             voteBean.Lock = true;
         }
@@ -185,6 +178,7 @@ public class RegVoteActivity extends AppCompatActivity {
         //Firebase 데이터베이스에 투표를 등록한다.
         DatabaseReference dbRef = mFirebaseDatabase.getReference();
         dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+        dbRef.child("votes").child(String.valueOf(voteBean.voteID)).child("choiceList").setValue(choiceBean);
         finish();
     }
 
