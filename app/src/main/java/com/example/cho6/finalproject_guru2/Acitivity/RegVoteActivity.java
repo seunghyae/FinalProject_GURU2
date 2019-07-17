@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -40,6 +41,8 @@ public class RegVoteActivity extends AppCompatActivity {
     Switch mSwitchPublic;
     CheckBox mCheckOverlap;
     Context mContext;
+    EditText mEdtCode;
+
 
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
     private static FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
@@ -61,6 +64,7 @@ public class RegVoteActivity extends AppCompatActivity {
         mEdtDetail = findViewById(R.id.edtDetail);
         mItem1 = findViewById(R.id.item1);
         mItem2 = findViewById(R.id.item2);
+        mEdtCode=findViewById(R.id.edtCode);
 
         mBtnReg = findViewById(R.id.btnReg);
         mBtnChangeDate = findViewById(R.id.btnChangeDate);
@@ -73,6 +77,18 @@ public class RegVoteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(RegVoteActivity.this, "onClick...", Toast.LENGTH_LONG).show();
                 addVote();
+            }
+        });
+
+        mSwitchPublic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    mEdtCode.setVisibility(View.VISIBLE);
+                }
+                else{
+                    mEdtCode.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
