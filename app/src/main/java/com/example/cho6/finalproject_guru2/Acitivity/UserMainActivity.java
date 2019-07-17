@@ -24,22 +24,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserMainActivity extends AppCompatActivity {
-
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
 
     private ListView mListView;
-
     //원본 데이터
     private List<VoteBean> mVoteList = new ArrayList<>();
     //어뎁터 생성및 적용
     private UserAdapter mUserAdapter;
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mListView=findViewById(R.id.LstUser);
+
+        //설정 버튼 클릭 이벤트
+        ImageButton mbtnSetting = findViewById(R.id.btnSetting);
+        mbtnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ii=new Intent(UserMainActivity.this,SettingActivity.class);
+                startActivity(ii);
+            }
+        });
+
+        //최초 데이터 세팅
+        mUserAdapter = new UserAdapter(this, mVoteList);
+        mListView.setAdapter(mUserAdapter);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
 
-        VoteBean voteBean = new VoteBean();
         mFirebaseDB.getReference().child("votes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -60,32 +80,8 @@ public class UserMainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-
-
         });
 
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        mListView=findViewById(R.id.LstUser);
-
-        ImageButton mbtnSetting=findViewById(R.id.btnSetting);
-        mbtnSetting.setOnClickListener(mbtnSettingClick);
-
-        //최초 데이터 세팅
-        mUserAdapter = new UserAdapter(this, mVoteList);
-        mListView.setAdapter(mUserAdapter);
-    }
-    //설정 버튼 클릭 이벤트
-    private View.OnClickListener mbtnSettingClick=new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent ii=new Intent(UserMainActivity.this,SettingActivity.class);
-            startActivity(ii);
-
-        }
-    };
 }
