@@ -1,18 +1,16 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.Firebase.UserAdapter;
-import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,14 +40,14 @@ public class UserMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mListView=findViewById(R.id.LstUser);
+        mListView = findViewById(R.id.LstUser);
 
         //설정 버튼 클릭 이벤트
         ImageButton mbtnSetting = findViewById(R.id.btnSetting);
         mbtnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent ii=new Intent(UserMainActivity.this,SettingActivity.class);
+                Intent ii = new Intent(UserMainActivity.this, SettingActivity.class);
                 startActivity(ii);
             }
         });
@@ -63,36 +61,29 @@ public class UserMainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        voteBean= new VoteBean();
+        mFirebaseDB.getReference().child("votes").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //데이터를 받아와서 List에 저장
+                mVoteList.clear();
 
-        if(voteBean.startVote == true) {
-
-            mFirebaseDB.getReference().child("votes").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    //데이터를 받아와서 List에 저장
-                    mVoteList.clear();
-
-
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        VoteBean bean = snapshot.getValue(VoteBean.class);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    VoteBean bean = snapshot.getValue(VoteBean.class);
+                    if(bean.startVote) {
                         mVoteList.add(0, bean);
                     }
-                    //바뀐 데이터로 refresh 한다
-                    if (mUserAdapter != null) {
-                        mUserAdapter.notifyDataSetChanged();
-                        ;
-                    }
                 }
+                //바뀐 데이터로 refresh 한다
+                if (mUserAdapter != null) {
+                    mUserAdapter.notifyDataSetChanged();
+                }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
 
-                }
+    }
 
-            };
-        }
-
+}

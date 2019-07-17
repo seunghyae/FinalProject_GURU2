@@ -1,16 +1,13 @@
 package com.example.cho6.finalproject_guru2.Firebase;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.cho6.finalproject_guru2.Acitivity.VoteActivity;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.database.DatabaseReference;
@@ -52,7 +49,7 @@ public class VoteAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.view_vote_admin, null);
 
         TextView txtVote = view.findViewById(R.id.txtVoteName);
-        TextView txtVoteEx = view.findViewById(R.id.txtEx);
+        TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
         TextView txtDate = view.findViewById(R.id.txtDate);
         Button btnStartVote = view.findViewById(R.id.btnStartVote);
         Button btnFinishVote = view.findViewById(R.id.btnFinishVote);
