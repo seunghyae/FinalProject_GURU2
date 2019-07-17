@@ -75,6 +75,7 @@ public class UserAdapter extends BaseAdapter {
             public void onClick(View view) {
                 if( TextUtils.isEmpty(voteBean.voteCode) ){
                     Intent i=new Intent(mContext,VoteActivity.class);
+                    i.putExtra("voteBean",voteBean);
                     mContext.startActivity(i);
                 }else{
                     Dialog dlg = new Dialog(mContext);
@@ -88,6 +89,7 @@ public class UserAdapter extends BaseAdapter {
                             String code = edtCode.getText().toString();
                             if(TextUtils.equals(voteBean.voteCode, code) ) {
                                 Intent i =new Intent(mContext, VoteActivity.class);
+                                i.putExtra("voteBean",voteBean);
                                 mContext.startActivity(i);
                             }
                             else {

@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -42,6 +43,7 @@ public class RegVoteActivity extends AppCompatActivity {
     CheckBox mCheckOverlap;
     Context mContext;
     EditText mEdtCode;
+    ImageView mImgLock;
 
 
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -70,6 +72,8 @@ public class RegVoteActivity extends AppCompatActivity {
         mBtnChangeDate = findViewById(R.id.btnChangeDate);
         mBtnChangeTime = findViewById(R.id.btnChangeTime);
 
+        mImgLock = findViewById(R.id.imgLock);
+
         mBtnChangeDate.setOnClickListener(mClicks);
         mBtnChangeTime.setOnClickListener(mClicks);
         mBtnReg.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +88,7 @@ public class RegVoteActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked){
+
                     mEdtCode.setVisibility(View.VISIBLE);
                 }
                 else{
@@ -177,6 +182,10 @@ public class RegVoteActivity extends AppCompatActivity {
         voteBean.voteDate = mTxtDate.getText().toString();
         voteBean.voteTime = mTxtTime.getText().toString();
         voteBean.voteID = System.currentTimeMillis();
+        if(mSwitchPublic.isChecked()){
+            voteBean.Lock = true;
+            mImgLock.setVisibility(View.VISIBLE);
+        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
