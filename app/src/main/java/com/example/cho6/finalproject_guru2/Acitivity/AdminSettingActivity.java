@@ -29,14 +29,13 @@ public class AdminSettingActivity extends AppCompatActivity {
             super(fm);
             this.tabSize=count;//텝의 수
           }
+
           @Override
         public Fragment getItem(int position){
             switch (position){
                 case 0:
                     return new AdminVoteFragment();
                 case 1:
-                    return new VoteListFragment();
-                case 2:
                     return new MyInfoFragment();
             }
             return null;

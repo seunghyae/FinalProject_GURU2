@@ -39,15 +39,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="투표 관리" />
+            android:text="종료된 투표" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="내 정보" />
-
-
-
 
     </com.google.android.material.tabs.TabLayout>
 

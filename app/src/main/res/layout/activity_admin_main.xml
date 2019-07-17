@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_weight="8.2"
             android:gravity="center"
-            android:text="진행중인 투표"
+            android:text="투표 관리"
             android:textColor="#EE2752"
             android:textSize="36sp"
             android:textStyle="bold" />
@@ -33,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.8"
             android:scaleType="fitXY"
-            android:background=""
             app:srcCompat="@drawable/setting" />
 
     </LinearLayout>
