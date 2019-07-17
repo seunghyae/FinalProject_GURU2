@@ -124,6 +124,7 @@
                 android:textColor="#F5F1F1" />
 
             <TextView
+                android:id="@+id/txtStartDate"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -131,6 +132,7 @@
                 android:hint="날짜표시" />
 
             <TextView
+                android:id="@+id/txtStartTime"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -171,6 +173,7 @@
                 android:textColor="#F5F1F1" />
 
             <TextView
+                android:id="@+id/txtEndDate"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -178,6 +181,7 @@
                 android:hint="날짜표시" />
 
             <TextView
+                android:id="@+id/txtEndTime"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
