@@ -52,7 +52,7 @@ public class UserAdapter extends BaseAdapter {
 
         TextView txtVote = view.findViewById(R.id.txtVoteName);
         TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
-        TextView txtDate = view.findViewById(R.id.txtDate);
+        TextView txtStartDate = view.findViewById(R.id.txtDate);
         Button btnVote = view.findViewById(R.id.btnVote);
         Button btnShowResult = view.findViewById(R.id.btnShowResult);
 
@@ -60,7 +60,7 @@ public class UserAdapter extends BaseAdapter {
         final VoteBean voteBean = mVoteList.get(i);
 
         txtVote.setText(voteBean.voteTitle);
-        txtDate.setText(voteBean.voteDate);
+        txtStartDate.setText(voteBean.voteStartDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
 
         btnShowResult.setOnClickListener(new View.OnClickListener() {

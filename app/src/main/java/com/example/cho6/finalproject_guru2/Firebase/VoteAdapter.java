@@ -50,7 +50,7 @@ public class VoteAdapter extends BaseAdapter {
 
         TextView txtVote = view.findViewById(R.id.txtVoteName);
         TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
-        TextView txtDate = view.findViewById(R.id.txtDate);
+        TextView txtStartDate = view.findViewById(R.id.txtDate);
         final Button btnStartVote = view.findViewById(R.id.btnStartVote);
         Button btnFinishVote = view.findViewById(R.id.btnFinishVote);
         Button btnShowVote = view.findViewById(R.id.btnShowVote);
@@ -58,7 +58,7 @@ public class VoteAdapter extends BaseAdapter {
         final VoteBean voteBean = mVoteList.get(i);
 
         txtVote.setText(voteBean.voteTitle);
-        txtDate.setText(voteBean.voteDate);
+        txtStartDate.setText(voteBean.voteStartDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
         if(voteBean.startVote) {
             btnStartVote.setText("투표중");
