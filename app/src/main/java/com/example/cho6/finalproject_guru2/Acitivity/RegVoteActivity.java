@@ -181,8 +181,8 @@ public class RegVoteActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             //시작시간 TODO 바꿀 것!
-            // voteBean.startVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
-            voteBean.startVoteMilli = System.currentTimeMillis();
+            voteBean.startVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
+            //voteBean.startVoteMilli = System.currentTimeMillis();
             //종료시간
             voteBean.endVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
 
