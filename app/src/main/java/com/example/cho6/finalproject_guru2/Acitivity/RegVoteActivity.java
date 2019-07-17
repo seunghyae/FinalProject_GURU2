@@ -182,9 +182,15 @@ public class RegVoteActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             //시작시간 TODO 바꿀 것!
-            voteBean.startVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
+            // voteBean.startVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
+            voteBean.startVoteMilli = System.currentTimeMillis();
             //종료시간
             voteBean.endVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
+
+            if(voteBean.endVoteMilli < voteBean.startVoteMilli) {
+                Toast.makeText(this,"투표 종료 시점이 올바르지 않습니다.", Toast.LENGTH_LONG).show();
+                return;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
