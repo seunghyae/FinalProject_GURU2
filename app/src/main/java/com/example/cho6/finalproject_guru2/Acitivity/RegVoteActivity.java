@@ -36,7 +36,7 @@ public class RegVoteActivity extends AppCompatActivity {
     TextView mTxtDate;
     TextView mTxtTime;
     EditText mEdtTitle, mEdtDetail, mItem1, mItem2;
-    Button mBtnChangeTime, mBtnChangeDate;
+    Button mBtnChangeTime, mBtnChangeDate, mBtnReg;
     Switch mSwitchPublic;
     CheckBox mCheckOverlap;
     Context mContext;
@@ -62,7 +62,7 @@ public class RegVoteActivity extends AppCompatActivity {
         mItem1 = findViewById(R.id.item1);
         mItem2 = findViewById(R.id.item2);
 
-        Button mBtnReg = findViewById(R.id.btnReg);
+        mBtnReg = findViewById(R.id.btnReg);
         mBtnChangeDate = findViewById(R.id.btnChangeDate);
         mBtnChangeTime = findViewById(R.id.btnChangeTime);
 
@@ -165,7 +165,7 @@ public class RegVoteActivity extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            //시작시간 TODO 바꿀껏!
+            //시작시간 TODO 바꿀 것!
             voteBean.startVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
             //종료시간
             voteBean.endVoteMilli = sdf.parse(voteBean.voteDate + " " + voteBean.voteTime).getTime();
