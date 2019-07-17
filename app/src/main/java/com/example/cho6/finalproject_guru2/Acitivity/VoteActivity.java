@@ -24,7 +24,7 @@ public class VoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vote);
 
         mTxtTitle = findViewById(R.id.txtTitle);
-        mTxtEx = findViewById(R.id.txtEx);
+        mTxtEx = findViewById(R.id.txtVoteEx);
 
         mBtnVoteSubmit = findViewById(R.id.btnVoteSubmit);
         mLstChoice = findViewById(R.id.lstChoice);
