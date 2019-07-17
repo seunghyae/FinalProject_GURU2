@@ -60,15 +60,16 @@ public class VoteAdapter extends BaseAdapter {
         txtVote.setText(voteBean.voteTitle);
         txtDate.setText(voteBean.voteDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
+        if(voteBean.startVote) {
+            btnStartVote.setText("투표중");
+        } else
+            btnStartVote.setText("투표시작");
+
 
         btnStartVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 voteBean.startVote = true;
-
-                if(voteBean.startVote == true)
-                btnStartVote.setVisibility(View.INVISIBLE);
-
                 DatabaseReference dbRef = mFirebaseDatabase.getReference();
                 dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
             }
