@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.cho6.finalproject_guru2.Acitivity.VoteActivity;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class VoteAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<VoteBean> mVoteList;
+
+    private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
     public VoteAdapter(Context context, List <VoteBean> voteList){
         mContext = context;
@@ -64,6 +68,10 @@ public class VoteAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 voteBean.startVote = true;
+
+                DatabaseReference dbRef = mFirebaseDatabase.getReference();
+                dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+
             }
         });
         return view;
