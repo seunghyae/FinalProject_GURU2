@@ -96,7 +96,6 @@ public class RegVoteActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked){
-
                     mEdtCode.setVisibility(View.VISIBLE);
                 }
                 else{
@@ -225,9 +224,13 @@ public class RegVoteActivity extends AppCompatActivity {
         voteBean.voteEndDate = mTxtEndDate.getText().toString();
         voteBean.voteEndTime = mTxtEndTime.getText().toString();
         voteBean.voteID = System.currentTimeMillis();
+
         if(mSwitchPublic.isChecked()){
             voteBean.Lock = true;
             mImgLock.setVisibility(View.VISIBLE);
+        }else {
+            voteBean.Lock = false;
+            mImgLock.setVisibility(View.INVISIBLE);
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

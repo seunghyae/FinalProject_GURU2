@@ -3,6 +3,8 @@ package com.example.cho6.finalproject_guru2.Firebase;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,11 +60,14 @@ public class UserAdapter extends BaseAdapter {
         Button btnShowResult = view.findViewById(R.id.btnShowResult);
 
 
+
         final VoteBean voteBean = mVoteList.get(i);
 
         txtVote.setText(voteBean.voteTitle);
         txtStartDate.setText(voteBean.voteStartDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
+
+
 
         btnShowResult.setOnClickListener(new View.OnClickListener() {
             @Override
