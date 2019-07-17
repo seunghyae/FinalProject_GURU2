@@ -68,7 +68,6 @@ public class VoteAdapter extends BaseAdapter {
 
                 DatabaseReference dbRef = mFirebaseDatabase.getReference();
                 dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
-
             }
         });
         return view;
