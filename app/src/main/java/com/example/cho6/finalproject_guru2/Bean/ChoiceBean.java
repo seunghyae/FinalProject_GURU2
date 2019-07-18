@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 public class ChoiceBean implements Serializable {
 
-    public boolean isOverlap; //중복허용
+    public boolean isSelect; //선택여부
     public String itemTitle;
 
     public ChoiceBean() {
 
     }
 
-    public ChoiceBean(boolean isOverlap, String itemTitle) {
-        this.isOverlap = isOverlap;
+    public ChoiceBean(boolean isSelect, String itemTitle) {
+        this.isSelect = isSelect;
         this.itemTitle = itemTitle;
     }
 
