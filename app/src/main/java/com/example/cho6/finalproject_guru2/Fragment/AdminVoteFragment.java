@@ -11,9 +11,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
+import com.example.cho6.finalproject_guru2.Firebase.EndVoteAdapter;
 import com.example.cho6.finalproject_guru2.Firebase.UserAdapter;
 import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
@@ -29,16 +31,17 @@ import java.util.List;
 public class AdminVoteFragment extends Fragment {
     FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
     private List<VoteBean> mEndVoteList = new ArrayList<>();
-    private VoteAdapter mVoteAdapter;
+    public EndVoteAdapter mEndVoteAdapter;
+    public ListView mListView;
+
 
     public AdminVoteFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public void onResume() {
+        super.onResume();
 
         mFirebaseDB.getReference().child("votes").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -50,8 +53,8 @@ public class AdminVoteFragment extends Fragment {
                         mEndVoteList.add(0, bean);
                     }
                     //바뀐 데이터로 refresh 한다
-                    if (mVoteAdapter != null) {
-                        mVoteAdapter.notifyDataSetChanged();
+                    if (mEndVoteAdapter != null) {
+                        mEndVoteAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -61,7 +64,22 @@ public class AdminVoteFragment extends Fragment {
 
             }
         });
-        return inflater.inflate(R.layout.fragment_admin_vote, container, false);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_admin_vote, container, false);
+
+        mListView = view.findViewById(R.id.manageVote);
+
+
+        //최초 데이터 세팅
+        mEndVoteAdapter = new EndVoteAdapter(getActivity(), mEndVoteList);
+        mListView.setAdapter(mEndVoteAdapter);
+
+        return view;
     }
 }
 
