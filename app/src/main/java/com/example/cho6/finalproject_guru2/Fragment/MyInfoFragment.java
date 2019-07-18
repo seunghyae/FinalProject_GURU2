@@ -68,9 +68,9 @@ public class MyInfoFragment extends Fragment {
                 MemberBean bean = dataSnapshot.getValue(MemberBean.class);
                 String UUIDEmail = Utils.getUserIdFromUUID(mFirebaseUser.getEmail());
                 if(TextUtils.equals(bean.memId, UUIDEmail)) {
-                    mTxtMemName.setText(bean.memName);
-                    mTxtMemMajor.setText(bean.memMajor);
-                    mTxtMemNo.setText(bean.memNum);
+                    mTxtMemName.setText("이름 : " + bean.memName);
+                    mTxtMemMajor.setText("학과 : " + bean.memMajor);
+                    mTxtMemNo.setText("학번 : " + bean.memNum);
                 }
 
             }

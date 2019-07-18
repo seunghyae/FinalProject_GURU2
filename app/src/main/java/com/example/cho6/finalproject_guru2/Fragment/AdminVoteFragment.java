@@ -20,6 +20,7 @@ import com.example.cho6.finalproject_guru2.Firebase.UserAdapter;
 import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.example.cho6.finalproject_guru2.utils.Utils;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,6 +31,7 @@ import java.util.List;
 
 public class AdminVoteFragment extends Fragment {
     FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
+    FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private List<VoteBean> mEndVoteList = new ArrayList<>();
     public EndVoteAdapter mEndVoteAdapter;
     public ListView mListView;
@@ -47,9 +49,11 @@ public class AdminVoteFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                String memId = Utils.getUserIdFromUUID(mFirebaseAuth.getCurrentUser().getEmail());
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     VoteBean bean = snapshot.getValue(VoteBean.class);
-                    if(bean.endVote == true) {
+                    if(bean.endVote == true && TextUtils.equals(memId, bean.adminId)) {
                         mEndVoteList.add(0, bean);
                     }
                     //바뀐 데이터로 refresh 한다
