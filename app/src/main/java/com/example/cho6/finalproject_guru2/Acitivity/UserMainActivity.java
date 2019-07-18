@@ -2,18 +2,22 @@ package com.example.cho6.finalproject_guru2.Acitivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.Firebase.UserAdapter;
 import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
+import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,13 +27,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserMainActivity extends AppCompatActivity {
 
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-    private TextView mTxtEndDate, mTxtEndTime;
+    private String mTxtEndDate, mTxtEndTime;
 
     private long now = System.currentTimeMillis();
 
@@ -76,32 +81,10 @@ public class UserMainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //데이터를 받아와서 List에 저장
                 mVoteList.clear();
-
-                // 종료시간이 되면 사용자 목록에서 삭제
-
-                mTxtEndDate = findViewById(R.id.txtEndDate);
-                mTxtEndTime = findViewById(R.id.txtEndTime);
-
-                voteBean.voteEndDate = mTxtEndDate.getText().toString();
-                voteBean.voteEndTime = mTxtEndTime.getText().toString();
-
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                try {
-                    //종료시간
-                    voteBean.endVoteMilli = sdf.parse(voteBean.voteEndDate + " " + voteBean.voteEndTime).getTime();
-
-                    if (voteBean.endVoteMilli == now) {
-                        voteBean.endVote = true;
-                        DatabaseReference dbRef = mFirebaseDatabase.getReference();
-                        dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
-                    }
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+                
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     VoteBean bean = snapshot.getValue(VoteBean.class);
+
                     if (bean.startVote == true && bean.endVote == false) {
                         mVoteList.add(0, bean);
                     } else if (bean.endVote) {

@@ -18,12 +18,15 @@ import com.example.cho6.finalproject_guru2.Acitivity.VoteActivity;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class UserAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<VoteBean> mVoteList;
+    private long now = System.currentTimeMillis();
 
     public UserAdapter(Context context, List <VoteBean> voteList){
         mContext = context;
@@ -80,9 +83,23 @@ public class UserAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if( TextUtils.isEmpty(voteBean.voteCode) ){
-                    Intent i=new Intent(mContext,VoteActivity.class);
-                    i.putExtra(VoteBean.class.getName(), voteBean);
-                    mContext.startActivity(i);
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    try {
+                        long end = sdf.parse(voteBean.voteEndDate+" "+voteBean.voteEndTime).getTime();
+
+                        if(end > now){
+                            Intent i=new Intent(mContext,VoteActivity.class);
+                            i.putExtra(VoteBean.class.getName(), voteBean);
+                            mContext.startActivity(i);
+                        }else {
+                            Toast.makeText(mContext, "투표가 종료되었습니다.", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
                 }else{
                     Dialog dlg = new Dialog(mContext);
                     dlg.setContentView(R.layout.view_custom_dialog);
@@ -94,9 +111,21 @@ public class UserAdapter extends BaseAdapter {
                         public void onClick(View view) {
                             String code = edtCode.getText().toString();
                             if(TextUtils.equals(voteBean.voteCode, code) ) {
-                                Intent i = new Intent(mContext, VoteActivity.class);
-                                i.putExtra(VoteBean.class.getName(), voteBean);
-                                mContext.startActivity(i);
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                try {
+                                    long end = sdf.parse(voteBean.voteEndDate+" "+voteBean.voteEndTime).getTime();
+
+                                    if(end > now){
+                                        Intent i=new Intent(mContext,VoteActivity.class);
+                                        i.putExtra(VoteBean.class.getName(), voteBean);
+                                        mContext.startActivity(i);
+                                    }else {
+                                        Toast.makeText(mContext, "투표가 종료되었습니다.", Toast.LENGTH_LONG).show();
+                                    }
+
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
                             }
                             else {
                                 Toast.makeText(mContext, "코드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
