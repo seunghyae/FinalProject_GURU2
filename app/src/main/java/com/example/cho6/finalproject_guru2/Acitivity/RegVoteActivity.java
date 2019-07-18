@@ -26,6 +26,7 @@ import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
 import com.example.cho6.finalproject_guru2.adapter.ChoiceAdapter;
+import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -271,6 +272,7 @@ public class RegVoteActivity extends AppCompatActivity {
         voteBean.voteEndDate = mTxtEndDate.getText().toString();
         voteBean.voteEndTime = mTxtEndTime.getText().toString();
         voteBean.voteID = System.currentTimeMillis() + "";
+        voteBean.adminId = Utils.getUserIdFromUUID(mFirebaseAuth.getCurrentUser().getEmail());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
