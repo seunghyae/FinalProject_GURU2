@@ -151,7 +151,7 @@ public class RegVoteActivity extends AppCompatActivity {
         mChoiceList.add( new ChoiceBean(false, "") );
         mChoiceList.add( new ChoiceBean(false, "") );
 
-        mChoiceAdapter = new ChoiceAdapter(this, mChoiceList , false);
+        mChoiceAdapter = new ChoiceAdapter(this, mChoiceList , false, true);
         mLstChoice.setAdapter(mChoiceAdapter);
 
     } //end onCreate()

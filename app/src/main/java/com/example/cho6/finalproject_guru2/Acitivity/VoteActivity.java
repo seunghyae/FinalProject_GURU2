@@ -1,38 +1,38 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
-import com.example.cho6.finalproject_guru2.Firebase.ChoiceAdapter;
-import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
+import com.example.cho6.finalproject_guru2.adapter.ChoiceAdapter;
+import com.example.cho6.finalproject_guru2.utils.Utils;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class VoteActivity extends AppCompatActivity {
 
+    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
 
-    TextView mTxtTitle, mTxtEx;
-    Button mBtnVoteSubmit;
-    ListView mLstChoice;
-
-    private List<ChoiceBean> mChoiceList = new ArrayList<>();
+    private TextView mTxtTitle, mTxtEx;
+    private Button mBtnVoteSubmit;
+    private ListView mLstChoice;
     private ChoiceAdapter mChoiceAdapter;
-
-    VoteBean voteBean;
+    private VoteBean mVoteBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,49 +41,63 @@ public class VoteActivity extends AppCompatActivity {
 
         mTxtTitle = findViewById(R.id.txtTitle);
         mTxtEx = findViewById(R.id.txtVoteEx);
-
         mBtnVoteSubmit = findViewById(R.id.btnVoteSubmit);
         mLstChoice = findViewById(R.id.lstChoice);
 
-        voteBean = (VoteBean)getIntent().getSerializableExtra("voteBean");
+        mVoteBean = (VoteBean)getIntent().getSerializableExtra(VoteBean.class.getName());
 
-        mTxtTitle.setText(voteBean.voteTitle);
-        mTxtEx.setText(voteBean.voteSubTitle);
-
+        mTxtTitle.setText(mVoteBean.voteTitle);
+        mTxtEx.setText(mVoteBean.voteSubTitle);
         //최초 데이터 세팅
-        mChoiceAdapter = new ChoiceAdapter(this, mChoiceList);
+        mChoiceAdapter = new ChoiceAdapter(this, mVoteBean.choiceList , false, false);
         mLstChoice.setAdapter(mChoiceAdapter);
 
+        mBtnVoteSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                voteSubmit();
+            }
+        });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    //투표하기 제출
+    private void voteSubmit() {
 
-        mFirebaseDB.getReference().child("votes").addValueEventListener(new ValueEventListener() {
+        //회원정보를 가져온다.
+        String userEmail = mFirebaseAuth.getCurrentUser().getEmail();
+        final String uuid = Utils.getUserIdFromUUID(userEmail);
+        mFirebaseDB.getReference().child("members").child(uuid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //데이터를 받아와서 List에 저장
-                mChoiceList.clear();
+                MemberBean memberBean = dataSnapshot.getValue(MemberBean.class);
 
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    ChoiceBean bean = snapshot.getValue(ChoiceBean.class);
-                    mChoiceList.add(0, bean);
+                if(memberBean.voteList == null) {
+                    memberBean.voteList = new ArrayList<>();
                 }
-                //바뀐 데이터로 refresh 한다
-                if(mChoiceAdapter != null){
-                    mChoiceAdapter.notifyDataSetChanged();;
+
+                boolean isUpdate = false;
+                for(int i=0; i<memberBean.voteList.size(); i++) {
+                    VoteBean voteBean = memberBean.voteList.get(i);
+                    if( voteBean.voteID == mVoteBean.voteID ) {
+                        memberBean.voteList.set(i, mVoteBean); //update
+                        isUpdate = true;
+                    }
                 }
+
+                if(!isUpdate) {
+                    memberBean.voteList.add(mVoteBean);
+                }
+
+                mFirebaseDB.getReference().child("members").child(uuid).setValue(memberBean);
+
+                Toast.makeText(VoteActivity.this, "투표가 완료 되었습니다.", Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-
-
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
     }
-
 
 }

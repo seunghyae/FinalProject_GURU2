@@ -80,10 +80,12 @@
             android:id="@+id/btnadditem"
             android:layout_width="60dp"
             android:layout_height="0dp"
-            android:layout_weight="0.3"
             android:layout_gravity="center"
+            android:layout_weight="0.3"
+            android:background="#FAFAFA"
+            android:padding="5dp"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/add" />
+            app:srcCompat="@drawable/plus_copy" />
 
         <EditText
             android:id="@+id/edtCode"
