@@ -71,6 +71,7 @@
         android:orientation="vertical">
 
         <ListView
+            android:id="@+id/lstChoice"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"></ListView>
@@ -92,7 +93,7 @@
             android:ems="10"
             android:hint="참여 코드"
             android:inputType="textPersonName"
-            android:visibility="invisible" />
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout

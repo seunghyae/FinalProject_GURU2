@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -18,34 +19,38 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
+import com.example.cho6.finalproject_guru2.adapter.ChoiceAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.UUID;
+import java.util.List;
 
 public class RegVoteActivity extends AppCompatActivity {
 
+    private FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+
     //객체 선언
-    int mYear,mMonth,mDay,mHour,mMinute;
-    TextView mTxtStartDate, mTxtStartTime, mTxtEndDate, mTxtEndTime;
-    EditText mEdtTitle, mEdtDetail, mItem1, mItem2;
-    Button mBtnStartDate, mBtnStartTime, mBtnEndDate, mBtnEndTime, mBtnReg;
-    Switch mSwitchPublic;
-    CheckBox mCheckOverlap;
-    Context mContext;
-    EditText mEdtCode;
-    ImageView mImgLock;
-
-
-    private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-    private static FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-
+    private int mYear,mMonth,mDay,mHour,mMinute;
+    private TextView mTxtStartDate, mTxtStartTime, mTxtEndDate, mTxtEndTime;
+    private EditText mEdtTitle, mEdtDetail, mItem1, mItem2;
+    private Button mBtnStartDate, mBtnStartTime, mBtnEndDate, mBtnEndTime, mBtnReg;
+    private Switch mSwitchPublic;
+    private CheckBox mCheckOverlap;
+    private Context mContext;
+    private EditText mEdtCode;
+    private ImageView mImgLock;
+    private ListView mLstChoice;
+    private ChoiceAdapter mChoiceAdapter;
+    private List<ChoiceBean> mChoiceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,8 @@ public class RegVoteActivity extends AppCompatActivity {
         mTxtEndDate = findViewById(R.id.txtEndDate);
         mTxtEndTime = findViewById(R.id.txtEndTime);
 
+        mLstChoice = findViewById(R.id.lstChoice);
+
         mSwitchPublic = findViewById(R.id.switchPublic);
         mCheckOverlap = findViewById(R.id.checkBox);
 
@@ -74,11 +81,11 @@ public class RegVoteActivity extends AppCompatActivity {
         mEdtCode=findViewById(R.id.edtCode);
 
         mBtnReg = findViewById(R.id.btnReg);
-
         mBtnStartDate.setOnClickListener(mClicks);
         mBtnStartTime.setOnClickListener(mClicks);
         mBtnEndDate.setOnClickListener(mClicks);
         mBtnEndTime.setOnClickListener(mClicks);
+        findViewById(R.id.btnadditem).setOnClickListener(mClicks);
 
 
         mBtnReg.setOnClickListener(new View.OnClickListener() {
@@ -100,19 +107,13 @@ public class RegVoteActivity extends AppCompatActivity {
             }
         });
 
-       /* mSwitchPublic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCheckOverlap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b == true)
-                Toast.makeText(getApplicationContext(), "비공개 투표로 설정 되었습니다", Toast.LENGTH_LONG).show();
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                //중복체크 설정값 변경
+                mChoiceAdapter.chnageChoiceItemOverlap(isChecked);
             }
         });
-        mCheckOverlap.setOnClickListener(new CheckBox.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "중복응답이 허용되었습니다.", Toast.LENGTH_LONG).show();
-            }
-        });*/
 
         //현재 날짜와 시간을 가져오기 위한 Calandar 인스턴스 선언
         Calendar cal=new GregorianCalendar();
@@ -122,7 +123,17 @@ public class RegVoteActivity extends AppCompatActivity {
         mHour=cal.get(Calendar.HOUR_OF_DAY);
         mMinute=cal.get(Calendar.MINUTE);
 
-       // UpdateNow();
+
+        //처음 4개만 초기 데이터로 셋팅한다.
+        mChoiceList = new ArrayList<>();
+        mChoiceList.add( new ChoiceBean(false, "") );
+        mChoiceList.add( new ChoiceBean(false, "") );
+        mChoiceList.add( new ChoiceBean(false, "") );
+        mChoiceList.add( new ChoiceBean(false, "") );
+
+        mChoiceAdapter = new ChoiceAdapter(this, mChoiceList , false);
+        mLstChoice.setAdapter(mChoiceAdapter);
+
     } //end onCreate()
 
     private View.OnClickListener mClicks = new View.OnClickListener() {
@@ -143,6 +154,10 @@ public class RegVoteActivity extends AppCompatActivity {
                     break;
                 case R.id.btnEndTime:
                     new TimePickerDialog(RegVoteActivity.this, mEndTimeSetListner, mHour, mMinute, false).show();
+                    break;
+                case R.id.btnadditem:
+                    //아이템 추가
+                    mChoiceAdapter.addChoiceItem();
                     break;
             }
         }
@@ -199,16 +214,18 @@ public class RegVoteActivity extends AppCompatActivity {
                 }
             };
 
-    void UpdateStart() {
+    private void UpdateStart() {
         mTxtStartDate.setText(String.format("%d-%02d-%02d", mYear, mMonth + 1, mDay));
         mTxtStartTime.setText(String.format("%d:%d:00", mHour, mMinute));
     }
 
-    void UpdateEnd(){
+    private void UpdateEnd() {
         mTxtEndDate.setText(String.format("%d-%02d-%02d",mYear,mMonth+1,mDay));
-        mTxtEndTime.setText(String.format("%d:%d:00",mHour,mMinute));    }
+        mTxtEndTime.setText(String.format("%d:%d:00",mHour,mMinute));
+    }
 
-    public void addVote(){
+    //투포추가
+    private void addVote(){
         Toast.makeText(this, "addVote()실행", Toast.LENGTH_LONG).show();
 
         VoteBean voteBean = new VoteBean();
