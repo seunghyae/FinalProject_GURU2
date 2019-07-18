@@ -49,6 +49,8 @@ public class UserMainActivity extends AppCompatActivity {
     private UserAdapter mUserAdapter;
     private VoteBean voteBean;
 
+    private boolean isMyVoted;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
