@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class VoteAdapter extends BaseAdapter {
     private List<VoteBean> mVoteList;
     LayoutInflater inflater;
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+
 
     public VoteAdapter(Context context, List <VoteBean> voteList){
         mContext = context;
@@ -63,6 +65,7 @@ public class VoteAdapter extends BaseAdapter {
         final Button btnStartVote = view.findViewById(R.id.btnStartVote);
         Button btnFinishVote = view.findViewById(R.id.btnFinishVote);
         Button btnShowVote = view.findViewById(R.id.btnShowVote);
+        ImageView imgLock = view.findViewById(R.id.imgLock);
 
         final VoteBean voteBean = mVoteList.get(i);
 
@@ -71,6 +74,10 @@ public class VoteAdapter extends BaseAdapter {
         txtVoteEx.setText(voteBean.voteSubTitle);
 
         final VoteBean item = mVoteList.get(i);
+
+        if(voteBean.Lock == true){
+            imgLock.setVisibility(View.VISIBLE);
+        }
 
 
         // 투표 시작 버튼이 눌리면 버튼 텍스트 변경

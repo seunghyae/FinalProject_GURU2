@@ -76,6 +76,8 @@ public class UserAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
+
+
             }
         });
         //투표하기

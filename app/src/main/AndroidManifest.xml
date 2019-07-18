@@ -12,19 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_vote_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Acitivity.AdminSettingActivity"></activity>
-        <activity android:name=".Acitivity.RegVoteActivity">
-
-        </activity>
+        <activity android:name=".Acitivity.VoteResultActivity"></activity>
+        <activity android:name=".Acitivity.AdminSettingActivity" />
+        <activity android:name=".Acitivity.RegVoteActivity"></activity>
         <activity android:name=".Acitivity.AdminMainActivity" />
         <activity android:name=".Acitivity.ResultVoteActivity" />
         <activity android:name=".Acitivity.VoteActivity" />
         <activity android:name=".Acitivity.SettingActivity" />
         <activity android:name=".Acitivity.JoinActivity" />
-        <activity android:name=".Acitivity.UserMainActivity" ></activity>
+        <activity android:name=".Acitivity.UserMainActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC4JUQBOocsood57IyUGoG7AwuZS4dO6Is" />
+
         <activity android:name=".Acitivity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
