@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +20,7 @@ public class VoteAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<VoteBean> mVoteList;
+    private MemberBean memberBean;
 
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -52,7 +53,6 @@ public class VoteAdapter extends BaseAdapter {
         TextView txtVote = view.findViewById(R.id.txtVoteName);
         TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
         TextView txtStartDate = view.findViewById(R.id.txtDate);
-        ImageView imgLock = view.findViewById(R.id.imgLock);
         final Button btnStartVote = view.findViewById(R.id.btnStartVote);
         Button btnFinishVote = view.findViewById(R.id.btnFinishVote);
         Button btnShowVote = view.findViewById(R.id.btnShowVote);
@@ -63,16 +63,19 @@ public class VoteAdapter extends BaseAdapter {
         txtStartDate.setText(voteBean.voteStartDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
 
-        if(voteBean.Lock == true){
-            imgLock.setVisibility(View.VISIBLE);
-        }
-
-        if(voteBean.startVote) {
+        // 투표 시작 버튼이 눌리면 버튼 텍스트 변경
+        if(voteBean.startVote == true) {
             btnStartVote.setText("투표중");
         } else
             btnStartVote.setText("투표시작");
 
+        //투표 종료 버튼이 눌리면 버튼 텍스트 변경
+         if(voteBean.endVote == true && voteBean.startVote == true) {
+            btnFinishVote.setVisibility(view.GONE);
+         } else
+            btnFinishVote.setText("투표종료");
 
+        //투표 시작 버튼 클릭 시 수행 될 작업
         btnStartVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +84,27 @@ public class VoteAdapter extends BaseAdapter {
                 dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
             }
         });
+
+        //투표 종료 버튼 클릭 시 수행 될 작업
+        btnFinishVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                voteBean.endVote = true;
+                DatabaseReference dbRef = mFirebaseDatabase.getReference();
+                dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+
+                /* for(int i=0; i<mVoteList.size(); i++) {
+                    VoteBean voteBean = mVoteList.get(i);
+                    if(memberBean.isAdmin) {
+                        mVoteList.remove(i);
+                        break;
+                    }
+                }
+                */
+
+            }
+        });
+
         return view;
     }
 }
