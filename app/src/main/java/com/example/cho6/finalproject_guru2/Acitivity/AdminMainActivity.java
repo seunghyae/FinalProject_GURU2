@@ -82,7 +82,6 @@ public class AdminMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
-
         mListView = findViewById(R.id.LstAdmin);
 
         Button mbtnNewVote=findViewById(R.id.btnNewVote);
