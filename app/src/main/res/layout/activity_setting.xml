@@ -34,22 +34,10 @@
         app:tabIndicatorColor="#EE2752"
         app:tabPaddingEnd="20dp"
         app:tabPaddingStart="20dp"
-        app:tabRippleColor="#00FFFFFF">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="투표한 목록" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="내 정보" />
-
-
-    </com.google.android.material.tabs.TabLayout>
+        app:tabRippleColor="#00FFFFFF"/>
 
     <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="395dp"
         android:layout_height="563dp"
         android:layout_marginStart="8dp"
