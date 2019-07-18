@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.Database.FileDB;
 import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
+import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +40,7 @@ import java.util.List;
 
 public class AdminMainActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
+    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
 
     private ListView mListView;
     //원본 데이터
@@ -55,9 +58,11 @@ public class AdminMainActivity extends AppCompatActivity {
                 //데이터를 받아와서 List에 저장
                 mVoteList.clear();
 
+                String memId = Utils.getUserIdFromUUID(mFirebaseAuth.getCurrentUser().getEmail());
+
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     VoteBean bean = snapshot.getValue(VoteBean.class);
-                    if(bean.endVote == false)
+                    if(bean.endVote == false && TextUtils.equals(memId, bean.adminId))
                         mVoteList.add(0, bean);
                 }
                 //바뀐 데이터로 refresh 한다
