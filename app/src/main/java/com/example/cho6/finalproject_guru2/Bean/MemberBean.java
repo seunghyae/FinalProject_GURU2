@@ -9,7 +9,5 @@ public class MemberBean {
     public String memName;
     public String memMajor;
     public String memNum;
-    public List<VoteBean> VoteList;
-
     public boolean isAdmin = false;
 }
