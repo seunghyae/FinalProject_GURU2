@@ -26,6 +26,7 @@ import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
 import com.example.cho6.finalproject_guru2.adapter.ChoiceAdapter;
+import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -244,7 +245,7 @@ public class RegVoteActivity extends AppCompatActivity {
         mTxtEndTime.setText(String.format("%d:%d:00",mHour,mMinute));
     }
 
-    //투포추가
+    //투표추가
     private void addVote(){
         Toast.makeText(this, "addVote()실행", Toast.LENGTH_LONG).show();
 
@@ -261,7 +262,15 @@ public class RegVoteActivity extends AppCompatActivity {
             Toast.makeText(this, "내용이 없는 항목이 있습니다. 항목 내용을 채워 주세요.", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        if(TextUtils.isEmpty(mTxtStartDate.getText().toString())){
+            Toast.makeText(this,"시작 날짜가 없습니다. 날짜를 설정해 주세요.",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(mTxtEndDate.getText().toString())){
+            Toast.makeText(this,"종료 날짜가 없습니다. 날짜를 설정해 주세요.",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
         VoteBean voteBean = new VoteBean();
         //데이터베이스에 저장한다.
         voteBean.voteTitle = mEdtTitle.getText().toString();
@@ -271,6 +280,7 @@ public class RegVoteActivity extends AppCompatActivity {
         voteBean.voteEndDate = mTxtEndDate.getText().toString();
         voteBean.voteEndTime = mTxtEndTime.getText().toString();
         voteBean.voteID = System.currentTimeMillis() + "";
+        voteBean.adminId = Utils.getUserIdFromUUID(mFirebaseAuth.getCurrentUser().getEmail());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {

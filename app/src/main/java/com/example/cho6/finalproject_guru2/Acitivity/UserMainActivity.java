@@ -70,9 +70,9 @@ public class UserMainActivity extends AppCompatActivity {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     VoteBean bean = snapshot.getValue(VoteBean.class);
-                    if(bean.startVote==true&&bean.endVote==false) {
+                    if (bean.startVote == true && bean.endVote == false) {
                         mVoteList.add(0, bean);
-                    }else if (bean.endVote) {
+                    } else if (bean.endVote) {
                         mVoteList.remove(bean);
                     }
 
@@ -82,12 +82,10 @@ public class UserMainActivity extends AppCompatActivity {
                     mUserAdapter.notifyDataSetChanged();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
     }
-
 }
+

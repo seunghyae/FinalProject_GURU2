@@ -18,6 +18,7 @@ public class VoteBean implements Serializable {
     public boolean startVote = false;
     public boolean endVote = false;
     public String voteCode;
+    public String adminId;
 
     public long startVoteMilli;
     public long endVoteMilli;
