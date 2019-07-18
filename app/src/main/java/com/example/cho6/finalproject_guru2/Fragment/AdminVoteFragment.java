@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminVoteFragment extends Fragment {
+
     FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
     FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private List<VoteBean> mEndVoteList = new ArrayList<>();

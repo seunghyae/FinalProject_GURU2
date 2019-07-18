@@ -13,9 +13,14 @@ import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.Database.FileDB;
 import com.example.cho6.finalproject_guru2.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class VoteAdapter extends BaseAdapter {
@@ -49,7 +54,7 @@ public class VoteAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.view_vote_admin, null);
 
         TextView txtVote = view.findViewById(R.id.txtVoteName);
@@ -69,19 +74,17 @@ public class VoteAdapter extends BaseAdapter {
 
 
         // 투표 시작 버튼이 눌리면 버튼 텍스트 변경
-        if(voteBean.startVote == true) {
+        if (voteBean.startVote == true) {
             btnStartVote.setText("투표중");
         } else
             btnStartVote.setText("투표시작");
 
         //투표 종료 버튼이 눌리면 버튼 텍스트 변경
-         if(voteBean.endVote == true && voteBean.startVote == true) {
+        if (voteBean.endVote == true && voteBean.startVote == true) {
             btnFinishVote.setVisibility(view.GONE);
 
 
-
-
-         } else
+        } else
             btnFinishVote.setText("투표종료");
 
         //투표 시작 버튼 클릭 시 수행 될 작업
@@ -99,12 +102,12 @@ public class VoteAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 // 투표 시작 전에 종료를 누른 경우
-                if(voteBean.startVote == false) {
+                if (voteBean.startVote == false) {
                     Toast.makeText(mContext, "먼저 투표가 진행되어야 합니다.", Toast.LENGTH_LONG).show();
                     voteBean.endVote = false;
                     DatabaseReference dbRef = mFirebaseDatabase.getReference();
                     dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
-                } else if(voteBean.startVote) {
+                } else if (voteBean.startVote) {
                     voteBean.endVote = true;
                     DatabaseReference dbRef = mFirebaseDatabase.getReference();
                     dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
@@ -113,7 +116,6 @@ public class VoteAdapter extends BaseAdapter {
 
                     mVoteList = FileDB.getMemoList(getActivity(), memberBean.memId);
                     notifyDataSetChanged(); //갱신해라*/
-
 
 
                 }
@@ -130,6 +132,8 @@ public class VoteAdapter extends BaseAdapter {
             }
         });
 
+
         return view;
     }
+
 }
