@@ -16,16 +16,13 @@
         android:layout_weight="1"
         >
 
-        <TextView
+        <ImageView
             android:id="@+id/VoteTitle"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="82dp"
             android:layout_weight="8.2"
             android:gravity="center"
-            android:text="투표 관리"
-            android:textColor="#EE2752"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+            app:srcCompat="@drawable/admin_main" />
 
         <ImageButton
             android:id="@+id/btnSetting"
