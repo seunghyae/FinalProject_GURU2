@@ -24,12 +24,13 @@ public class ChoiceAdapter extends BaseAdapter {
     private Context mContext;
     private List<ChoiceBean> mChoiceList;
     private boolean mIsOverlap;
+    private boolean mIsMake;
 
-
-    public ChoiceAdapter(Context context, List<ChoiceBean> choiceList, boolean isOverlap) {
+    public ChoiceAdapter(Context context, List<ChoiceBean> choiceList, boolean isOverlap, boolean isMake) {
         mContext = context;
         mChoiceList = choiceList;
         mIsOverlap = isOverlap;
+        mIsMake = isMake;
     }
 
     public void setChoiceList(List<ChoiceBean> choiceList) {
@@ -84,14 +85,22 @@ public class ChoiceAdapter extends BaseAdapter {
 
         final ChoiceBean choiceBean = mChoiceList.get(position);
 
-        if(mIsOverlap) {
+        if(mIsMake) {
             rdoChoice.setVisibility(View.GONE);
             chkChoice.setVisibility(View.GONE);
-            chkChoice.setChecked(choiceBean.isSelect);
-        } else {
-            rdoChoice.setVisibility(View.GONE);
-            chkChoice.setVisibility(View.GONE);
-            rdoChoice.setChecked(choiceBean.isSelect);
+        }
+        else {
+            if(mIsOverlap) {
+                rdoChoice.setVisibility(View.GONE);
+                chkChoice.setVisibility(View.VISIBLE);
+                chkChoice.setChecked(choiceBean.isSelect);
+            } else {
+                rdoChoice.setVisibility(View.VISIBLE);
+                chkChoice.setVisibility(View.GONE);
+                rdoChoice.setChecked(choiceBean.isSelect);
+            }
+            edtTile.setEnabled(false);
+            btnDel.setVisibility(View.GONE);
         }
 
         txtNum.setText( (position+1) + "." );

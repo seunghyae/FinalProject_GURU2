@@ -41,7 +41,9 @@
             android:layout_weight="2.5"
             android:ems="10"
             android:hint="항목내용 입력"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:maxLines="5"
+            android:singleLine="false"/>
 
         <Button
             android:id="@+id/btnChoiceDel"

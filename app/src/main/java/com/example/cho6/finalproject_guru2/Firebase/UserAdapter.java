@@ -3,8 +3,6 @@ package com.example.cho6.finalproject_guru2.Firebase;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +81,7 @@ public class UserAdapter extends BaseAdapter {
             public void onClick(View view) {
                 if( TextUtils.isEmpty(voteBean.voteCode) ){
                     Intent i=new Intent(mContext,VoteActivity.class);
-                    i.putExtra("voteBean",voteBean);
+                    i.putExtra(VoteBean.class.getName(), voteBean);
                     mContext.startActivity(i);
                 }else{
                     Dialog dlg = new Dialog(mContext);
@@ -96,8 +94,8 @@ public class UserAdapter extends BaseAdapter {
                         public void onClick(View view) {
                             String code = edtCode.getText().toString();
                             if(TextUtils.equals(voteBean.voteCode, code) ) {
-                                Intent i =new Intent(mContext, VoteActivity.class);
-                                i.putExtra("voteBean",voteBean);
+                                Intent i = new Intent(mContext, VoteActivity.class);
+                                i.putExtra(VoteBean.class.getName(), voteBean);
                                 mContext.startActivity(i);
                             }
                             else {
