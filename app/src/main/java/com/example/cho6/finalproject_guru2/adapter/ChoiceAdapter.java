@@ -75,7 +75,7 @@ public class ChoiceAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.view_result_choice, null);
+        view = inflater.inflate(R.layout.view_choice, null);
 
         TextView txtNum = view.findViewById(R.id.txtNum);
         RadioButton rdoChoice = view.findViewById(R.id.rdoChoice);

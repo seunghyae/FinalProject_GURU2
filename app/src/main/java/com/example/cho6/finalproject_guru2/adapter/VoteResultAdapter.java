@@ -75,13 +75,12 @@ public class VoteResultAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.view_choice, null);
+        view = inflater.inflate(R.layout.view_result_choice, null);
 
         TextView txtNum = view.findViewById(R.id.txtNum);
         RadioButton rdoChoice = view.findViewById(R.id.rdoChoice);
         CheckBox chkChoice = view.findViewById(R.id.chkChoice);
         final EditText edtTile = view.findViewById(R.id.edtTitle);
-        Button btnDel = view.findViewById(R.id.btnChoiceDel);
 
         final ChoiceBean choiceBean = mChoiceList.get(position);
 
@@ -100,7 +99,6 @@ public class VoteResultAdapter extends BaseAdapter {
                 rdoChoice.setChecked(choiceBean.isSelect);
             }
             edtTile.setEnabled(false);
-            btnDel.setVisibility(View.GONE);
         }
 
         txtNum.setText( (position+1) + "." );
@@ -141,22 +139,7 @@ public class VoteResultAdapter extends BaseAdapter {
             }
         });
 
-        btnDel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("투표 항목을 삭제 하시겠습니까?");
-                builder.setNegativeButton("아니오", null);
-                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mChoiceList.remove(position);
-                        VoteResultAdapter.this.notifyDataSetChanged();
-                    }
-                });
-                builder.create().show();
-            }
-        });
+
 
         return view;
     }
