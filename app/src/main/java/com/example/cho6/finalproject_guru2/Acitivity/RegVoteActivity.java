@@ -18,9 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
-import com.example.cho6.finalproject_guru2.Database.FileDB;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -86,7 +84,6 @@ public class RegVoteActivity extends AppCompatActivity {
         mBtnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(RegVoteActivity.this, "onClick...", Toast.LENGTH_LONG).show();
                 addVote();
             }
         });
@@ -98,7 +95,7 @@ public class RegVoteActivity extends AppCompatActivity {
                     mEdtCode.setVisibility(View.VISIBLE);
                 }
                 else{
-                    mEdtCode.setVisibility(View.INVISIBLE);
+                    mEdtCode.setVisibility(View.GONE);
                 }
             }
         });
@@ -224,12 +221,6 @@ public class RegVoteActivity extends AppCompatActivity {
         voteBean.voteEndTime = mTxtEndTime.getText().toString();
         voteBean.voteID = System.currentTimeMillis();
 
-        if(mSwitchPublic.isChecked()){
-            voteBean.Lock = true;
-        }else {
-            voteBean.Lock = false;
-        }
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             //시작시간 TODO 바꿀 것!
@@ -246,14 +237,15 @@ public class RegVoteActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ChoiceBean choiceBean = new ChoiceBean();
-        choiceBean.item1 = mItem1.getText().toString();
-        choiceBean.item2 = mItem2.getText().toString();
+        //TODO Choice 항목추가
 
+
+        //공개여부
         if(mSwitchPublic.isChecked()){
             voteBean.Lock = true;
         }
 
+        //항목체크 중복허용 여부
         if(mCheckOverlap.isChecked()){
             voteBean.overlap = true;
         }
@@ -268,14 +260,10 @@ public class RegVoteActivity extends AppCompatActivity {
         //Firebase 데이터베이스에 투표를 등록한다.
         DatabaseReference dbRef = mFirebaseDatabase.getReference();
         dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
-        dbRef.child("votes").child(String.valueOf(voteBean.voteID)).child("choiceList").setValue(choiceBean);
-        dbRef.child("members").child(FileDB.getLoginMember(getBaseContext())).child("voteList").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
-        dbRef.child("members").child(FileDB.getLoginMember(getBaseContext())).child("voteList").child(String.valueOf(voteBean.voteID)).child("choiceList").setValue(choiceBean);
+
+        Toast.makeText(this, "투표가 추가 되었습니다.", Toast.LENGTH_SHORT).show();
+
         finish();
     }
 
-    public static String getUserIdFromUUID(String userEmail) {
-        long val = UUID.nameUUIDFromBytes(userEmail.getBytes()).getMostSignificantBits();
-        return String.valueOf(val);
-    }
 }
