@@ -5,14 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
-import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
@@ -53,7 +49,7 @@ public class ChoiceAdapter extends BaseAdapter {
 
         final ChoiceBean choiceBean = mChoiceList.get(i);
 
-        radioBtn.setText(choiceBean.item1);
+
 
 
         return view;

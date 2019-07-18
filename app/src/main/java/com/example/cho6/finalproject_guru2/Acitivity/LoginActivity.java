@@ -16,6 +16,7 @@ import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Database.FileDB;
 import com.example.cho6.finalproject_guru2.Firebase.MemberAdapter;
 import com.example.cho6.finalproject_guru2.R;
+import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -106,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                             try {
                                 MemberBean bean = snapshot.getValue(MemberBean.class);
-                                String UUIDEmail = getUserIdFromUUID(loginedEmail);
+                                String UUIDEmail = Utils.getUserIdFromUUID(loginedEmail);
                                 if (TextUtils.equals(bean.memId, UUIDEmail)) {
                                     //FileDB memberBean 값을 저장
                                     FileDB.setLoginMember(getApplicationContext(), bean);
@@ -173,12 +174,5 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(i);
         finish();
     } // end goAdminMainActivity
-
-
-
-    public static String getUserIdFromUUID(String userEmail) {
-        long val = UUID.nameUUIDFromBytes(userEmail.getBytes()).getMostSignificantBits();
-        return String.valueOf(val);
-    }
 
 }
