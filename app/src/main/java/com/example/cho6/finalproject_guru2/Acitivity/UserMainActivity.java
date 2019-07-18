@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.Firebase.UserAdapter;
+import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -69,9 +70,12 @@ public class UserMainActivity extends AppCompatActivity {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     VoteBean bean = snapshot.getValue(VoteBean.class);
-                    if(bean.startVote) {
+                    if (bean.startVote == true && bean.endVote == false) {
                         mVoteList.add(0, bean);
+                    } else if (bean.endVote) {
+                        mVoteList.remove(bean);
                     }
+
                 }
                 //바뀐 데이터로 refresh 한다
                 if (mUserAdapter != null) {
@@ -85,5 +89,5 @@ public class UserMainActivity extends AppCompatActivity {
         });
 
     }
-
 }
+
