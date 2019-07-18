@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class VoteAdapter extends BaseAdapter {
+public class AdminVoteAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<VoteBean> mVoteList;
@@ -34,7 +34,7 @@ public class VoteAdapter extends BaseAdapter {
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
 
-    public VoteAdapter(Context context, List <VoteBean> voteList){
+    public AdminVoteAdapter(Context context, List <VoteBean> voteList){
         mContext = context;
         mVoteList = voteList;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

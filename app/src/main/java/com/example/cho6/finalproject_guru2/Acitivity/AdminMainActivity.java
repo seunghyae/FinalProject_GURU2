@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
-import com.example.cho6.finalproject_guru2.adapter.VoteAdapter;
+import com.example.cho6.finalproject_guru2.adapter.AdminVoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +32,7 @@ public class AdminMainActivity extends AppCompatActivity {
     //원본 데이터
     private List<VoteBean> mVoteList = new ArrayList<>();
     //어뎁터 생성및 적용
-    private VoteAdapter mVoteAdapter;
+    private AdminVoteAdapter mAdminVoteAdapter;
 
     @Override
     public void onResume() {
@@ -52,8 +52,8 @@ public class AdminMainActivity extends AppCompatActivity {
                         mVoteList.add(0, bean);
                 }
                 //바뀐 데이터로 refresh 한다
-                if(mVoteAdapter != null){
-                    mVoteAdapter.notifyDataSetChanged();;
+                if(mAdminVoteAdapter != null){
+                    mAdminVoteAdapter.notifyDataSetChanged();;
                 }
             }
 
@@ -82,8 +82,8 @@ public class AdminMainActivity extends AppCompatActivity {
         mbtnSetting.setOnClickListener(mbtnSettingClick);
 
         //최초 데이터 세팅
-        mVoteAdapter = new VoteAdapter(this, mVoteList);
-        mListView.setAdapter(mVoteAdapter);
+        mAdminVoteAdapter = new AdminVoteAdapter(this, mVoteList);
+        mListView.setAdapter(mAdminVoteAdapter);
     }
 
     //투표 만들기 버튼 클릭 이벤트

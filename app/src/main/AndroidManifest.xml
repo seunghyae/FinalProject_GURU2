@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_vote_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Acitivity.VoteResultActivity"></activity>
         <activity android:name=".Acitivity.AdminSettingActivity" />
         <activity android:name=".Acitivity.RegVoteActivity"></activity>
         <activity android:name=".Acitivity.AdminMainActivity" />

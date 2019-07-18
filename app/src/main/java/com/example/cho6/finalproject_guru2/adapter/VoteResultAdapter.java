@@ -19,6 +19,7 @@ import com.example.cho6.finalproject_guru2.R;
 
 import java.util.List;
 
+//투표만들기에 뿌리는 Adapter
 public class VoteResultAdapter extends BaseAdapter {
 
     private Context mContext;
