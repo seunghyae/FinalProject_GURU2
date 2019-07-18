@@ -1,8 +1,10 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -84,7 +86,24 @@ public class RegVoteActivity extends AppCompatActivity {
         mBtnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addVote();
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(RegVoteActivity.this);
+                    alert.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            addVote();
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.setMessage("투표를 생성하시겠습니까?");
+                    alert.show();
+
             }
         });
 
@@ -265,5 +284,8 @@ public class RegVoteActivity extends AppCompatActivity {
 
         finish();
     }
+
+
+
 
 }
