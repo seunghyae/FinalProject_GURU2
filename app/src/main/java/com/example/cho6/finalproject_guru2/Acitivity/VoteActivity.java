@@ -51,7 +51,7 @@ public class VoteActivity extends AppCompatActivity {
 
         mVoteBean = (VoteBean)getIntent().getSerializableExtra(VoteBean.class.getName());
 
-        List<ChoiceBean> choiceList = null;
+        List<ChoiceBean> choiceList = mVoteBean.choiceList;
         String userEmail = mFirebaseAuth.getCurrentUser().getEmail();
 
         mTxtTitle.setText(mVoteBean.voteTitle);
@@ -64,8 +64,6 @@ public class VoteActivity extends AppCompatActivity {
                     break;
                 }
             }
-        } else {
-            choiceList = mVoteBean.choiceList;
         }
 
         mChoiceAdapter = new ChoiceAdapter(this, choiceList, false, false);
