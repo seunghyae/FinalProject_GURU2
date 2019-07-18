@@ -45,7 +45,7 @@ public class ChoiceAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.view_choice, null);
 
-        RadioButton radioBtn = view.findViewById(R.id.radioBtn);
+        RadioButton radioBtn = view.findViewById(R.id.rdoChoice);
 
         final ChoiceBean choiceBean = mChoiceList.get(i);
 
