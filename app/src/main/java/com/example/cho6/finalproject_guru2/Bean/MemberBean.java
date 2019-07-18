@@ -11,6 +11,4 @@ public class MemberBean implements Serializable  {
     public String memMajor;
     public String memNum;
     public boolean isAdmin = false;
-
-    public List<VoteBean> voteList;
 }

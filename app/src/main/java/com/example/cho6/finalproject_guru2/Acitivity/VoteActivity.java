@@ -1,6 +1,7 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -10,8 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
+import com.example.cho6.finalproject_guru2.Bean.VotedBean;
 import com.example.cho6.finalproject_guru2.R;
 import com.example.cho6.finalproject_guru2.adapter.ChoiceAdapter;
 import com.example.cho6.finalproject_guru2.utils.Utils;
@@ -64,31 +65,40 @@ public class VoteActivity extends AppCompatActivity {
     private void voteSubmit() {
 
         //회원정보를 가져온다.
-        String userEmail = mFirebaseAuth.getCurrentUser().getEmail();
+        final String userEmail = mFirebaseAuth.getCurrentUser().getEmail();
         final String uuid = Utils.getUserIdFromUUID(userEmail);
-        mFirebaseDB.getReference().child("members").child(uuid).addListenerForSingleValueEvent(new ValueEventListener() {
+
+        mFirebaseDB.getReference().child("votes").child(mVoteBean.voteID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                MemberBean memberBean = dataSnapshot.getValue(MemberBean.class);
+                VoteBean voteBean = dataSnapshot.getValue(VoteBean.class);
 
-                if(memberBean.voteList == null) {
-                    memberBean.voteList = new ArrayList<>();
+                if(voteBean.votedList == null) {
+                    voteBean.votedList = new ArrayList<>();
                 }
 
-                boolean isUpdate = false;
-                for(int i=0; i<memberBean.voteList.size(); i++) {
-                    VoteBean voteBean = memberBean.voteList.get(i);
-                    if( voteBean.voteID == mVoteBean.voteID ) {
-                        memberBean.voteList.set(i, mVoteBean); //update
-                        isUpdate = true;
+                boolean isAlreadyVote = false;
+                for(int i=0; i<voteBean.votedList.size(); i++) {
+                    VotedBean votedBean = voteBean.votedList.get(i);
+                    if( TextUtils.equals(votedBean.userId, userEmail) ) {
+                        isAlreadyVote = true;
+                        break;
                     }
                 }
 
-                if(!isUpdate) {
-                    memberBean.voteList.add(mVoteBean);
+                if(isAlreadyVote) {
+                    Toast.makeText(VoteActivity.this, "이미 투표 하셨습니다.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
-                mFirebaseDB.getReference().child("members").child(uuid).setValue(memberBean);
+                VotedBean votedBean = new VotedBean();
+                votedBean.userId = userEmail;
+                votedBean.uuid = uuid;
+                votedBean.choiceList = mChoiceAdapter.getChoiceList();
+                //신규추가
+                voteBean.votedList.add(votedBean);
+
+                mFirebaseDB.getReference().child("votes").child(mVoteBean.voteID).setValue(voteBean);
 
                 Toast.makeText(VoteActivity.this, "투표가 완료 되었습니다.", Toast.LENGTH_SHORT).show();
                 finish();
