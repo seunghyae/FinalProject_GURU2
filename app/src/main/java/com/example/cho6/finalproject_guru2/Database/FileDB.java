@@ -63,4 +63,8 @@ public class FileDB {
                 mGson.fromJson(listStr, new TypeToken<List<MemberBean>>(){}.getType() );
         return memberList;
     }
+
+
+
+
 }

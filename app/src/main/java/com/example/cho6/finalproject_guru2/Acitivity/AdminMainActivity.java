@@ -59,7 +59,8 @@ public class AdminMainActivity extends AppCompatActivity {
 
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     VoteBean bean = snapshot.getValue(VoteBean.class);
-                    mVoteList.add(0, bean);
+                    if(bean.endVote == false)
+                        mVoteList.add(0, bean);
                 }
                 //바뀐 데이터로 refresh 한다
                 if(mVoteAdapter != null){
