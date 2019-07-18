@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.R;
+import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -64,7 +65,7 @@ public class JoinActivity extends AppCompatActivity {
     private void joinProcess() {
         MemberBean memberBean = new MemberBean();
         //데이터베이스에 저장한다.
-        memberBean.memId = getUserIdFromUUID(email);
+        memberBean.memId = Utils.getUserIdFromUUID(email);
         memberBean.isAdmin = false;
         memberBean.memName = mEdtName.getText().toString();
         memberBean.memMajor = mEdtMajor.getText().toString();
@@ -107,8 +108,4 @@ public class JoinActivity extends AppCompatActivity {
         finish();
     }  // end goMainActivity
 
-    public static String getUserIdFromUUID(String userEmail) {
-        long val = UUID.nameUUIDFromBytes(userEmail.getBytes()).getMostSignificantBits();
-        return String.valueOf(val);
-    }
 }

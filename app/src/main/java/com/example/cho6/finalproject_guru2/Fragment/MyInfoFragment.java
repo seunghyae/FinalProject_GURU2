@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.cho6.finalproject_guru2.Acitivity.LoginActivity;
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.R;
+import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,12 +58,12 @@ public class MyInfoFragment extends Fragment {
         email = mFirebaseUser.getEmail();
         mTxtMemId.setText("구글ID: "+email);
 
-        mFirebaseDB.getReference().child("member").child(getUserIdFromUUID(email)).addListenerForSingleValueEvent(new ValueEventListener() {
+        mFirebaseDB.getReference().child("member").child(Utils.getUserIdFromUUID(email)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     MemberBean bean = snapshot.getValue(MemberBean.class);
-                    String UUIDEmail = LoginActivity.getUserIdFromUUID(mFirebaseUser.getEmail());
+                    String UUIDEmail = Utils.getUserIdFromUUID(mFirebaseUser.getEmail());
                     if(TextUtils.equals(bean.memId, UUIDEmail)) {
                         mTxtMemName.setText("이름: "+bean.memName);
                         mTxtMemMajor.setText("학과: "+bean.memMajor);
@@ -94,8 +95,4 @@ public class MyInfoFragment extends Fragment {
         }
     }
 
-    public static String getUserIdFromUUID(String userEmail) {
-        long val = UUID.nameUUIDFromBytes(userEmail.getBytes()).getMostSignificantBits();
-        return String.valueOf(val);
-    }
 }

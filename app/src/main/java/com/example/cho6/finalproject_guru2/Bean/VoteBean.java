@@ -1,6 +1,7 @@
 package com.example.cho6.finalproject_guru2.Bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VoteBean implements Serializable {
@@ -14,10 +15,11 @@ public class VoteBean implements Serializable {
     public String voteEndTime;
     public boolean Lock = false;
     public boolean overlap = false;
-    public List<ChoiceBean> ChoiceList;
     public boolean startVote = false;
     public String voteCode;
 
     public long startVoteMilli;
     public long endVoteMilli;
+
+    public List<ChoiceBean> choiceList;
 }
