@@ -12,23 +12,23 @@
         android:orientation="vertical"
         android:weightSum="10">
 
-        <TextView
+        <ImageView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:text="회원가입"
             android:textColor="#EE2752"
             android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:srcCompat="@drawable/join"/>
 
         <TextView
             android:id="@+id/txtId"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="20dp"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:ems="10"
             android:gravity="center"
             android:text="."
@@ -41,7 +41,7 @@
             android:layout_margin="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:ems="10"
             android:hint="이름"
             android:inputType="textPersonName" />
@@ -53,7 +53,7 @@
             android:layout_margin="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:ems="10"
             android:hint="학과"
             android:inputType="textPersonName" />
@@ -65,7 +65,7 @@
             android:layout_margin="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:ems="10"
             android:hint="학번"
             android:inputType="textPersonName" />

@@ -63,14 +63,4 @@ public class FileDB {
                 mGson.fromJson(listStr, new TypeToken<List<MemberBean>>(){}.getType() );
         return memberList;
     }
-    public static List<VoteBean> getVoteList(Context context, String memId){
-        MemberBean memberBean = getFindMember(context, memId);
-        if(memberBean == null) return null;
-
-        if( memberBean.VoteList == null ) {
-            return new ArrayList<>();
-        }
-        else
-            return memberBean.VoteList;
-    }
 }

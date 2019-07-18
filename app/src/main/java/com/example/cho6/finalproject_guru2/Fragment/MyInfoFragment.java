@@ -31,6 +31,13 @@ import java.util.UUID;
 
 
 public class MyInfoFragment extends Fragment {
+
+    //FireBase 인증객체
+    FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
+    FirebaseUser mFirebaseUser=mFirebaseAuth.getCurrentUser();
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,29 +56,23 @@ public class MyInfoFragment extends Fragment {
             }
         });
 
-        //FireBase 인증객체
-        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
-        final FirebaseUser mFirebaseUser=mFirebaseAuth.getCurrentUser();
 
         String email;
         email = mFirebaseUser.getEmail();
         mTxtMemId.setText("구글ID: "+email);
 
-        mFirebaseDB.getReference().child("member").child(Utils.getUserIdFromUUID(email)).addListenerForSingleValueEvent(new ValueEventListener() {
+        mFirebaseDB.getReference().child("members").child(Utils.getUserIdFromUUID(email)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    MemberBean bean = snapshot.getValue(MemberBean.class);
-                    String UUIDEmail = Utils.getUserIdFromUUID(mFirebaseUser.getEmail());
-                    if(TextUtils.equals(bean.memId, UUIDEmail)) {
-                        mTxtMemName.setText("이름: "+bean.memName);
-                        mTxtMemMajor.setText("학과: "+bean.memMajor);
-                        mTxtMemNo.setText("학번: "+bean.memNum);
-                        break;
-                    }
 
+                MemberBean bean = dataSnapshot.getValue(MemberBean.class);
+                String UUIDEmail = Utils.getUserIdFromUUID(mFirebaseUser.getEmail());
+                if(TextUtils.equals(bean.memId, UUIDEmail)) {
+                    mTxtMemName.setText(bean.memName);
+                    mTxtMemMajor.setText(bean.memMajor);
+                    mTxtMemNo.setText(bean.memNum);
                 }
+
             }
 
             @Override
