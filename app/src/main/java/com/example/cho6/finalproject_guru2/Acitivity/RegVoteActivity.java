@@ -76,7 +76,6 @@ public class RegVoteActivity extends AppCompatActivity {
         mEdtCode=findViewById(R.id.edtCode);
 
         mBtnReg = findViewById(R.id.btnReg);
-        mImgLock = findViewById(R.id.imgLock);
 
         mBtnStartDate.setOnClickListener(mClicks);
         mBtnStartTime.setOnClickListener(mClicks);
@@ -227,10 +226,8 @@ public class RegVoteActivity extends AppCompatActivity {
 
         if(mSwitchPublic.isChecked()){
             voteBean.Lock = true;
-            mImgLock.setVisibility(View.VISIBLE);
         }else {
             voteBean.Lock = false;
-            mImgLock.setVisibility(View.INVISIBLE);
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

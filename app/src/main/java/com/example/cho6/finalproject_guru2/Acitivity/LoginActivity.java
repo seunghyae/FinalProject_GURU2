@@ -104,16 +104,20 @@ public class LoginActivity extends AppCompatActivity {
 
                         int count = 0;
                         for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            MemberBean bean = snapshot.getValue(MemberBean.class);
-                            String UUIDEmail = getUserIdFromUUID(loginedEmail);
-                            if(TextUtils.equals(bean.memId, UUIDEmail)) {
-                                //FileDB memberBean 값을 저장
-                                FileDB.setLoginMember(getApplicationContext(), bean);
+                            try {
+                                MemberBean bean = snapshot.getValue(MemberBean.class);
+                                String UUIDEmail = getUserIdFromUUID(loginedEmail);
+                                if (TextUtils.equals(bean.memId, UUIDEmail)) {
+                                    //FileDB memberBean 값을 저장
+                                    FileDB.setLoginMember(getApplicationContext(), bean);
 
-                                //Firebase 인증 - true: 관리자, false: 유저
-                                firebaseAuthWithGoogle(account, bean.isAdmin);
-                                count = 1;
-                                break;
+                                    //Firebase 인증 - true: 관리자, false: 유저
+                                    firebaseAuthWithGoogle(account, bean.isAdmin);
+                                    count = 1;
+                                    break;
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }
                         if(count == 0) {
