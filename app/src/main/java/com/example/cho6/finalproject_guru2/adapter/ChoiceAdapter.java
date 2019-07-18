@@ -86,10 +86,10 @@ public class ChoiceAdapter extends BaseAdapter {
 
         if(mIsOverlap) {
             rdoChoice.setVisibility(View.GONE);
-            chkChoice.setVisibility(View.VISIBLE);
+            chkChoice.setVisibility(View.GONE);
             chkChoice.setChecked(choiceBean.isSelect);
         } else {
-            rdoChoice.setVisibility(View.VISIBLE);
+            rdoChoice.setVisibility(View.GONE);
             chkChoice.setVisibility(View.GONE);
             rdoChoice.setChecked(choiceBean.isSelect);
         }

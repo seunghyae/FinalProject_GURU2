@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -247,6 +248,20 @@ public class RegVoteActivity extends AppCompatActivity {
     private void addVote(){
         Toast.makeText(this, "addVote()실행", Toast.LENGTH_LONG).show();
 
+        List<ChoiceBean> choiceList = mChoiceAdapter.getChoiceList();
+        boolean isContinue = true;
+        for(ChoiceBean bean : choiceList) {
+            //하나라도 항목이 없으면 추가 못한다
+            if(TextUtils.isEmpty(bean.itemTitle)) {
+                isContinue = false;
+                break;
+            }
+        }
+        if(!isContinue || choiceList.size() == 0) {
+            Toast.makeText(this, "내용이 없는 항목이 있습니다. 항목 내용을 채워 주세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         VoteBean voteBean = new VoteBean();
         //데이터베이스에 저장한다.
         voteBean.voteTitle = mEdtTitle.getText().toString();
@@ -259,7 +274,7 @@ public class RegVoteActivity extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            //시작시간 TODO 바꿀 것!
+            //시작시간
             voteBean.startVoteMilli = sdf.parse(voteBean.voteStartDate + " " + voteBean.voteStartTime).getTime();
             //voteBean.startVoteMilli = System.currentTimeMillis();
             //종료시간
@@ -273,12 +288,13 @@ public class RegVoteActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //TODO Choice 항목추가
-
+        //Choice 항목추가
+        voteBean.choiceList = choiceList;
 
         //공개여부
         if(mSwitchPublic.isChecked()){
             voteBean.Lock = true;
+            voteBean.voteCode = mEdtCode.getText().toString();
         }
 
         //항목체크 중복허용 여부
@@ -287,11 +303,6 @@ public class RegVoteActivity extends AppCompatActivity {
         }
 
         voteBean.startVote = false;
-
-        if(mEdtCode!=null){
-            voteBean.voteCode=mEdtCode.getText().toString();
-        }
-
 
         //Firebase 데이터베이스에 투표를 등록한다.
         DatabaseReference dbRef = mFirebaseDatabase.getReference();
