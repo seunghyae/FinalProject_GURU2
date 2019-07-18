@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.Bean.VotedBean;
 import com.example.cho6.finalproject_guru2.R;
@@ -22,7 +23,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class VoteActivity extends AppCompatActivity {
 
@@ -47,10 +51,24 @@ public class VoteActivity extends AppCompatActivity {
 
         mVoteBean = (VoteBean)getIntent().getSerializableExtra(VoteBean.class.getName());
 
+        List<ChoiceBean> choiceList = null;
+        String userEmail = mFirebaseAuth.getCurrentUser().getEmail();
+
         mTxtTitle.setText(mVoteBean.voteTitle);
         mTxtEx.setText(mVoteBean.voteSubTitle);
         //최초 데이터 세팅
-        mChoiceAdapter = new ChoiceAdapter(this, mVoteBean.choiceList , false, false);
+        if(mVoteBean.votedList != null) {
+            for(VotedBean votedBean : mVoteBean.votedList) {
+                if( TextUtils.equals(votedBean.userId, userEmail) ) {
+                    choiceList = votedBean.choiceList;
+                    break;
+                }
+            }
+        } else {
+            choiceList = mVoteBean.choiceList;
+        }
+
+        mChoiceAdapter = new ChoiceAdapter(this, choiceList, false, false);
         mLstChoice.setAdapter(mChoiceAdapter);
 
         mBtnVoteSubmit.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +110,7 @@ public class VoteActivity extends AppCompatActivity {
                 }
 
                 VotedBean votedBean = new VotedBean();
+                voteBean.voteID = voteBean.voteID;
                 votedBean.userId = userEmail;
                 votedBean.uuid = uuid;
                 votedBean.choiceList = mChoiceAdapter.getChoiceList();
