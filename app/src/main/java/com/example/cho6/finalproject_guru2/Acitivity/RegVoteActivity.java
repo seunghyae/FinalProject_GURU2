@@ -270,7 +270,7 @@ public class RegVoteActivity extends AppCompatActivity {
         voteBean.voteStartTime = mTxtStartTime.getText().toString();
         voteBean.voteEndDate = mTxtEndDate.getText().toString();
         voteBean.voteEndTime = mTxtEndTime.getText().toString();
-        voteBean.voteID = System.currentTimeMillis();
+        voteBean.voteID = System.currentTimeMillis() + "";
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -306,7 +306,7 @@ public class RegVoteActivity extends AppCompatActivity {
 
         //Firebase 데이터베이스에 투표를 등록한다.
         DatabaseReference dbRef = mFirebaseDatabase.getReference();
-        dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+        dbRef.child("votes").child(voteBean.voteID).setValue(voteBean);
 
         Toast.makeText(this, "투표가 추가 되었습니다.", Toast.LENGTH_SHORT).show();
 
