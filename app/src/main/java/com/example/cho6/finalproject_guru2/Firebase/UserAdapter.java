@@ -58,7 +58,7 @@ public class UserAdapter extends BaseAdapter {
         TextView txtStartDate = view.findViewById(R.id.txtDate);
         Button btnVote = view.findViewById(R.id.btnVote);
         Button btnShowResult = view.findViewById(R.id.btnShowResult);
-
+        ImageView imgLock = view.findViewById(R.id.imgLock);
 
 
         final VoteBean voteBean = mVoteList.get(i);
@@ -67,7 +67,9 @@ public class UserAdapter extends BaseAdapter {
         txtStartDate.setText(voteBean.voteStartDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
 
-
+        if(voteBean.Lock == true){
+            imgLock.setVisibility(View.VISIBLE);
+        }
 
         btnShowResult.setOnClickListener(new View.OnClickListener() {
             @Override

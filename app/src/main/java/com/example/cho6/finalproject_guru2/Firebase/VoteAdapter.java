@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
@@ -51,6 +52,7 @@ public class VoteAdapter extends BaseAdapter {
         TextView txtVote = view.findViewById(R.id.txtVoteName);
         TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
         TextView txtStartDate = view.findViewById(R.id.txtDate);
+        ImageView imgLock = view.findViewById(R.id.imgLock);
         final Button btnStartVote = view.findViewById(R.id.btnStartVote);
         Button btnFinishVote = view.findViewById(R.id.btnFinishVote);
         Button btnShowVote = view.findViewById(R.id.btnShowVote);
@@ -60,6 +62,11 @@ public class VoteAdapter extends BaseAdapter {
         txtVote.setText(voteBean.voteTitle);
         txtStartDate.setText(voteBean.voteStartDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
+
+        if(voteBean.Lock == true){
+            imgLock.setVisibility(View.VISIBLE);
+        }
+
         if(voteBean.startVote) {
             btnStartVote.setText("투표중");
         } else
