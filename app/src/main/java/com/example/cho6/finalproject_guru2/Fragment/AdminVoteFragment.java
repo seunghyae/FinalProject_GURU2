@@ -4,13 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cho6.finalproject_guru2.Bean.VoteBean;
+import com.example.cho6.finalproject_guru2.Firebase.UserAdapter;
 import com.example.cho6.finalproject_guru2.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +41,13 @@ public class AdminVoteFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
+
+    //원본 데이터
+    private List<VoteBean> mEndVoteList = new ArrayList<>();
+    //어뎁터 생성및 적용
+    private UserAdapter mUserAdapter;
 
     public AdminVoteFragment() {
         // Required empty public constructor
@@ -108,4 +125,34 @@ public class AdminVoteFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mFirebaseDB.getReference().child("votes").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //데이터를 받아와서 List에 저장
+                mEndVoteList.clear();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    VoteBean bean = snapshot.getValue(VoteBean.class);
+                    if(bean.startVote == true && bean.endVote == true) {
+                        mEndVoteList.add(0, bean);
+                    }
+                }
+                //바뀐 데이터로 refresh 한다
+                if (mUserAdapter != null) {
+                    mUserAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+    }
+
 }
