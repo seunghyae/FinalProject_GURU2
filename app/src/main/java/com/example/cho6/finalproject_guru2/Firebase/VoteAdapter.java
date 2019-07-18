@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
@@ -89,9 +90,17 @@ public class VoteAdapter extends BaseAdapter {
         btnFinishVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                voteBean.endVote = true;
-                DatabaseReference dbRef = mFirebaseDatabase.getReference();
-                dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+                // 투표 시작 전에 종료를 누른 경우
+                if(voteBean.startVote == false) {
+                    Toast.makeText(mContext, "먼저 투표가 진행되어야 합니다.", Toast.LENGTH_LONG).show();
+                    voteBean.endVote = false;
+                    DatabaseReference dbRef = mFirebaseDatabase.getReference();
+                    dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+                } else if(voteBean.startVote) {
+                    voteBean.endVote = true;
+                    DatabaseReference dbRef = mFirebaseDatabase.getReference();
+                    dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+                }
 
                 /* for(int i=0; i<mVoteList.size(); i++) {
                     VoteBean voteBean = mVoteList.get(i);
