@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +20,7 @@ public class VoteAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<VoteBean> mVoteList;
+    private MemberBean memberBean;
 
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -62,15 +64,15 @@ public class VoteAdapter extends BaseAdapter {
         txtVoteEx.setText(voteBean.voteSubTitle);
 
         // 투표 시작 버튼이 눌리면 버튼 텍스트 변경
-        if(voteBean.startVote == true && voteBean.endVote == false) {
+        if(voteBean.startVote == true) {
             btnStartVote.setText("투표중");
         } else
             btnStartVote.setText("투표시작");
 
-        // 투표 종료 버튼이 눌리면 버튼 텍스트 변경
-        if(voteBean.endVote == true && voteBean.startVote == true) {
+        //투표 종료 버튼이 눌리면 버튼 텍스트 변경
+         if(voteBean.endVote == true && voteBean.startVote == true) {
             btnFinishVote.setVisibility(view.GONE);
-        } else
+         } else
             btnFinishVote.setText("투표종료");
 
         //투표 시작 버튼 클릭 시 수행 될 작업
@@ -90,6 +92,16 @@ public class VoteAdapter extends BaseAdapter {
                 voteBean.endVote = true;
                 DatabaseReference dbRef = mFirebaseDatabase.getReference();
                 dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+
+                /* for(int i=0; i<mVoteList.size(); i++) {
+                    VoteBean voteBean = mVoteList.get(i);
+                    if(memberBean.isAdmin) {
+                        mVoteList.remove(i);
+                        break;
+                    }
+                }
+                */
+
             }
         });
 
