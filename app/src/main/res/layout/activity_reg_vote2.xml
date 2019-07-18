@@ -73,7 +73,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.7"></ListView>
+            android:layout_weight="1.5"></ListView>
 
         <ImageButton
             android:id="@+id/btnadditem"
@@ -83,6 +83,16 @@
             android:layout_gravity="center"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/add" />
+
+        <EditText
+            android:id="@+id/edtCode"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:ems="10"
+            android:hint="참여 코드"
+            android:inputType="textPersonName"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
