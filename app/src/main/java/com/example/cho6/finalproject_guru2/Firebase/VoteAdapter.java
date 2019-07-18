@@ -64,6 +64,9 @@ public class VoteAdapter extends BaseAdapter {
         txtStartDate.setText(voteBean.voteStartDate);
         txtVoteEx.setText(voteBean.voteSubTitle);
 
+        final VoteBean item = mVoteList.get(i);
+
+
         // 투표 시작 버튼이 눌리면 버튼 텍스트 변경
         if(voteBean.startVote == true) {
             btnStartVote.setText("투표중");
@@ -73,6 +76,10 @@ public class VoteAdapter extends BaseAdapter {
         //투표 종료 버튼이 눌리면 버튼 텍스트 변경
          if(voteBean.endVote == true && voteBean.startVote == true) {
             btnFinishVote.setVisibility(view.GONE);
+
+
+
+
          } else
             btnFinishVote.setText("투표종료");
 
