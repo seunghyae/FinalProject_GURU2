@@ -1,7 +1,5 @@
 package com.example.cho6.finalproject_guru2.Fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
-import com.example.cho6.finalproject_guru2.Firebase.EndVoteAdapter;
-import com.example.cho6.finalproject_guru2.Firebase.UserAdapter;
-import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
+import com.example.cho6.finalproject_guru2.adapter.EndVoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;

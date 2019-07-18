@@ -1,31 +1,18 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ListAdapter;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
-import com.example.cho6.finalproject_guru2.Database.FileDB;
-import com.example.cho6.finalproject_guru2.Firebase.VoteAdapter;
+import com.example.cho6.finalproject_guru2.adapter.VoteAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.cho6.finalproject_guru2.Firebase;
+package com.example.cho6.finalproject_guru2.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

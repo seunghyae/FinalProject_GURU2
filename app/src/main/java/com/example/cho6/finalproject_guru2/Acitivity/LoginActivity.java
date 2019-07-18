@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Database.FileDB;
-import com.example.cho6.finalproject_guru2.Firebase.MemberAdapter;
+import com.example.cho6.finalproject_guru2.adapter.MemberAdapter;
 import com.example.cho6.finalproject_guru2.R;
 import com.example.cho6.finalproject_guru2.utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -33,9 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Member;
 import java.util.List;
-import java.util.UUID;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -19,14 +19,14 @@ import com.example.cho6.finalproject_guru2.R;
 
 import java.util.List;
 
-public class ChoiceAdapter extends BaseAdapter {
+public class VoteResultAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<ChoiceBean> mChoiceList;
     private boolean mIsOverlap;
     private boolean mIsMake;
 
-    public ChoiceAdapter(Context context, List<ChoiceBean> choiceList, boolean isOverlap, boolean isMake) {
+    public VoteResultAdapter(Context context, List<ChoiceBean> choiceList, boolean isOverlap, boolean isMake) {
         mContext = context;
         mChoiceList = choiceList;
         mIsOverlap = isOverlap;
@@ -75,7 +75,7 @@ public class ChoiceAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.view_result_choice, null);
+        view = inflater.inflate(R.layout.view_choice, null);
 
         TextView txtNum = view.findViewById(R.id.txtNum);
         RadioButton rdoChoice = view.findViewById(R.id.rdoChoice);
@@ -151,7 +151,7 @@ public class ChoiceAdapter extends BaseAdapter {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         mChoiceList.remove(position);
-                        ChoiceAdapter.this.notifyDataSetChanged();
+                        VoteResultAdapter.this.notifyDataSetChanged();
                     }
                 });
                 builder.create().show();
