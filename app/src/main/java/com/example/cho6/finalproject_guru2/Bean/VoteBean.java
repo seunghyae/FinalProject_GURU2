@@ -20,7 +20,7 @@ public class VoteBean implements Serializable {
     public String voteCode;
     public String adminId;
 
-    public long startVoteMilli;
+   public long startVoteMilli;
     public long endVoteMilli;
 
     //투표할 항목
