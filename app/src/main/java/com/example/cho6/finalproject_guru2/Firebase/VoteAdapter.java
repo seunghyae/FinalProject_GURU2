@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
+import com.example.cho6.finalproject_guru2.Database.FileDB;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,13 +22,13 @@ public class VoteAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<VoteBean> mVoteList;
-    private MemberBean memberBean;
-
+    LayoutInflater inflater;
     private static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
     public VoteAdapter(Context context, List <VoteBean> voteList){
         mContext = context;
         mVoteList = voteList;
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -107,6 +108,14 @@ public class VoteAdapter extends BaseAdapter {
                     voteBean.endVote = true;
                     DatabaseReference dbRef = mFirebaseDatabase.getReference();
                     dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+
+                   /* FileDB.delMemo(getActivity(), memberBean.memId, item.memoID);
+
+                    mVoteList = FileDB.getMemoList(getActivity(), memberBean.memId);
+                    notifyDataSetChanged(); //갱신해라*/
+
+
+
                 }
 
                 /* for(int i=0; i<mVoteList.size(); i++) {
