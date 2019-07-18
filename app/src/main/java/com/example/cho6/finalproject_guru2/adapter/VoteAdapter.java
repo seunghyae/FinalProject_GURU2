@@ -1,6 +1,8 @@
 package com.example.cho6.finalproject_guru2.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,16 +110,23 @@ public class VoteAdapter extends BaseAdapter {
         btnFinishVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 투표 시작 전에 종료를 누른 경우
-                if (voteBean.startVote == false) {
-                    Toast.makeText(mContext, "먼저 투표가 진행되어야 합니다.", Toast.LENGTH_LONG).show();
-                    voteBean.endVote = false;
-                    DatabaseReference dbRef = mFirebaseDatabase.getReference();
-                    dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
-                } else if (voteBean.startVote) {
-                    voteBean.endVote = true;
-                    DatabaseReference dbRef = mFirebaseDatabase.getReference();
-                    dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+                AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
+                alert.setTitle("투표종료");
+                alert.setMessage("정말로 종료 하시겠습니까?");
+
+                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 투표 시작 전에 종료를 누른 경우
+                        if (voteBean.startVote == false) {
+                            Toast.makeText(mContext, "먼저 투표가 진행되어야 합니다.", Toast.LENGTH_LONG).show();
+                            voteBean.endVote = false;
+                            DatabaseReference dbRef = mFirebaseDatabase.getReference();
+                            dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
+                        } else if (voteBean.startVote) {
+                            voteBean.endVote = true;
+                            DatabaseReference dbRef = mFirebaseDatabase.getReference();
+                            dbRef.child("votes").child(String.valueOf(voteBean.voteID)).setValue(voteBean);
 
                    /* FileDB.delMemo(getActivity(), memberBean.memId, item.memoID);
 
@@ -125,7 +134,19 @@ public class VoteAdapter extends BaseAdapter {
                     notifyDataSetChanged(); //갱신해라*/
 
 
-                }
+                        }
+                    }
+                });
+
+                alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+                alert.show();
+
 
                 /* for(int i=0; i<mVoteList.size(); i++) {
                     VoteBean voteBean = mVoteList.get(i);

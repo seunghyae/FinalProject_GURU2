@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
@@ -81,6 +82,7 @@ public class AdminVoteFragment extends Fragment {
 
         return view;
     }
+
 }
 
 
