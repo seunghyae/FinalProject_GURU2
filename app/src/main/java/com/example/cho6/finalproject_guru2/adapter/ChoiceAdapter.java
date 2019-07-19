@@ -3,6 +3,8 @@ package com.example.cho6.finalproject_guru2.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,12 +135,18 @@ public class ChoiceAdapter extends BaseAdapter {
             }
         });
 
-        edtTile.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        edtTile.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View view, boolean b) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 choiceBean.itemTitle = edtTile.getText().toString();
                 mChoiceList.set(position, choiceBean);
             }
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
         });
 
         btnDel.setOnClickListener(new View.OnClickListener() {

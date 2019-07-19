@@ -66,7 +66,7 @@ public class VoteActivity extends AppCompatActivity {
             }
         }
 
-        mChoiceAdapter = new ChoiceAdapter(this, choiceList, false, false);
+        mChoiceAdapter = new ChoiceAdapter(this, choiceList, mVoteBean.overlap, false);
         mLstChoice.setAdapter(mChoiceAdapter);
 
         mBtnVoteSubmit.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +103,7 @@ public class VoteActivity extends AppCompatActivity {
                 }
 
                 if(isAlreadyVote) {
-                    Toast.makeText(VoteActivity.this, "이미 투표 하셨습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VoteActivity.this, "이미 투표 하셨습니다. 지금하신 투표는 반영되지 않습니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
