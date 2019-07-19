@@ -12,18 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
-import com.example.cho6.finalproject_guru2.Database.FileDB;
 import com.example.cho6.finalproject_guru2.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class AdminVoteAdapter extends BaseAdapter {
@@ -160,6 +153,7 @@ public class AdminVoteAdapter extends BaseAdapter {
             }
         });
 
+        //투표 현황 버튼
 
         return view;
     }

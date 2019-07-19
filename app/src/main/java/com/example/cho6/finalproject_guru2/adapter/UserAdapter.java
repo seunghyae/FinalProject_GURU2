@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cho6.finalproject_guru2.Acitivity.ResultVoteActivity;
 import com.example.cho6.finalproject_guru2.Acitivity.VoteActivity;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
@@ -71,13 +72,13 @@ public class UserAdapter extends BaseAdapter {
         if(voteBean.Lock == true){
             imgLock.setVisibility(View.VISIBLE);
         }
-
+        //결과보기
         btnShowResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
+                Intent i = new Intent(mContext, ResultVoteActivity.class);
+                i.putExtra(VoteBean.class.getName(), voteBean);
+                mContext.startActivity(i);
             }
         });
         //투표하기
