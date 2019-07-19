@@ -53,14 +53,16 @@ public class EndVoteAdapter extends BaseAdapter {
 
         TextView txtVote = view.findViewById(R.id.txtVoteName);
         TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
-        TextView txtStartDate = view.findViewById(R.id.txtDate);
+        TextView txtStart = view.findViewById(R.id.txtStart);
+        TextView txtEnd=view.findViewById(R.id.txtEnd);
         Button btnShowVote = view.findViewById(R.id.btnShowVote);
         ImageView imgLock = view.findViewById(R.id.imgLock);
 
         final VoteBean voteBean = mEndVoteList.get(i);
 
         txtVote.setText(voteBean.voteTitle);
-        txtStartDate.setText(voteBean.voteStartDate);
+        txtStart.setText("시작: "+voteBean.voteStartDate+" "+voteBean.voteStartTime);
+        txtEnd.setText("종료: "+voteBean.voteEndDate+" "+voteBean.voteEndTime);
         txtVoteEx.setText(voteBean.voteSubTitle);
 
         if(voteBean.Lock== true){

@@ -56,7 +56,8 @@ public class AdminVoteAdapter extends BaseAdapter {
 
         TextView txtVote = view.findViewById(R.id.txtVoteName);
         TextView txtVoteEx = view.findViewById(R.id.txtVoteEx);
-        TextView txtStartDate = view.findViewById(R.id.txtDate);
+        TextView txtStart = view.findViewById(R.id.txtStart);
+        TextView txtEnd=view.findViewById(R.id.txtEnd);
         final Button btnStartVote = view.findViewById(R.id.btnStartVote);
         Button btnFinishVote = view.findViewById(R.id.btnFinishVote);
         Button btnShowVote = view.findViewById(R.id.btnShowVote);
@@ -65,7 +66,8 @@ public class AdminVoteAdapter extends BaseAdapter {
         final VoteBean voteBean = mVoteList.get(i);
 
         txtVote.setText(voteBean.voteTitle);
-        txtStartDate.setText(voteBean.voteStartDate);
+        txtStart.setText("시작: "+voteBean.voteStartDate+" "+voteBean.voteStartTime);
+        txtEnd.setText("종료: "+voteBean.voteEndDate+" "+voteBean.voteEndTime);
         txtVoteEx.setText(voteBean.voteSubTitle);
 
         final VoteBean item = mVoteList.get(i);
