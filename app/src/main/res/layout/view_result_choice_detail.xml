@@ -42,7 +42,7 @@
             android:singleLine="false" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/txtVoteCount"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"

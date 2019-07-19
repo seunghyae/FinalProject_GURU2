@@ -1,56 +1,61 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
+import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.widget.ListView;
-
-import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
-import com.example.cho6.finalproject_guru2.Bean.VotedBean;
 import com.example.cho6.finalproject_guru2.R;
-import com.example.cho6.finalproject_guru2.adapter.ResultChoiceAdapter;
-import com.example.cho6.finalproject_guru2.utils.Utils;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.cho6.finalproject_guru2.adapter.ResultChoiceDetailAdapter;
+import com.example.cho6.finalproject_guru2.adapter.UserVoteResultAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.List;
+import com.google.firebase.database.ValueEventListener;
 
 public class ResultVoteDetailActivity extends AppCompatActivity {
 
-    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
-
-    private ListView mLstChoiceResult;
-    private ResultChoiceAdapter mResultChoiceAdapter;
+    public ListView mListView;
+    private TextView mTxtTitle, mTxtEx;
+    public ResultChoiceDetailAdapter mResultChoiceDetailAdapter;
     private VoteBean mVoteBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result_vote_detail);
+        setContentView(R.layout.activity_result_vote);
 
-        mLstChoiceResult=findViewById(R.id.lstChoiceResult);
+        mTxtTitle = findViewById(R.id.txtTitle);
+        mTxtEx = findViewById(R.id.txtVoteEx);
+        mListView = findViewById(R.id.lstResultChoice);
 
-        mVoteBean = (VoteBean)getIntent().getSerializableExtra(VoteBean.class.getName());
-        List<ChoiceBean> choiceList = mVoteBean.choiceList;
+        mVoteBean = (VoteBean) getIntent().getSerializableExtra(VoteBean.class.getName());
 
-        String userEmail = mFirebaseAuth.getCurrentUser().getEmail();
-        String uuid = Utils.getUserIdFromUUID(userEmail);
+        mTxtTitle.setText(mVoteBean.voteTitle);
+        mTxtEx.setText(mVoteBean.voteSubTitle);
+    }
 
-        //최초 데이터 세팅
-        if(mVoteBean.votedList != null) {
-            for(VotedBean votedBean : mVoteBean.votedList) {
-                for(ChoiceBean choiceBean:votedBean.choiceList){
-                    if(choiceBean.isSelect==true){
-                        choiceList=votedBean.choiceList;
-                    }
-                }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        FirebaseDatabase.getInstance().getReference().child("votes").child(mVoteBean.voteID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                VoteBean voteBean = dataSnapshot.getValue(VoteBean.class);
+
+                //실시간 데이터 세팅
+                mResultChoiceDetailAdapter = new ResultChoiceDetailAdapter(ResultVoteDetailActivity.this, voteBean);
+                mListView.setAdapter(mResultChoiceDetailAdapter);
             }
-        }
-
-        mResultChoiceAdapter=new ResultChoiceAdapter(this,choiceList);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
 
     }
+
 }

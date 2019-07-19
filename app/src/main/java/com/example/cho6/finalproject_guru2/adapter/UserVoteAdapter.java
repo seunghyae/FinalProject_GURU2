@@ -1,6 +1,7 @@
 package com.example.cho6.finalproject_guru2.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.cho6.finalproject_guru2.Acitivity.ResultVoteActivity;
 import com.example.cho6.finalproject_guru2.Bean.MemberBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.Bean.VotedBean;
@@ -69,6 +71,15 @@ public class UserVoteAdapter extends BaseAdapter {
         if(voteBean.Lock== true){
             imgLock.setVisibility(View.VISIBLE);
         }
+
+        btnShowResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mContext, ResultVoteActivity.class);
+                i.putExtra(VoteBean.class.getName(), voteBean);
+                mContext.startActivity(i);
+            }
+        });
 
         return view;
     }

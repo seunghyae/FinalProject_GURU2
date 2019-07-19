@@ -4,9 +4,9 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txtEmail"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Email"
-        android:text="TextView" />
+        android:text="txtEmail" />
 </LinearLayout>

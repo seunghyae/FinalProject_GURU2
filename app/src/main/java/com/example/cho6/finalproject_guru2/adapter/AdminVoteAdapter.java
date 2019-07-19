@@ -3,6 +3,7 @@ package com.example.cho6.finalproject_guru2.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cho6.finalproject_guru2.Acitivity.ResultVoteActivity;
+import com.example.cho6.finalproject_guru2.Acitivity.ResultVoteDetailActivity;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
 import com.google.firebase.database.DatabaseReference;
@@ -156,7 +159,14 @@ public class AdminVoteAdapter extends BaseAdapter {
         });
 
         //투표 현황 버튼
-
+        btnShowVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mContext, ResultVoteDetailActivity.class);
+                i.putExtra(VoteBean.class.getName(), voteBean);
+                mContext.startActivity(i);
+            }
+        });
         return view;
     }
 
