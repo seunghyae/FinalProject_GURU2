@@ -120,7 +120,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="시작시간설정:" />
+                android:text="시작시간:" />
 
             <Button
                 android:id="@+id/btnStartDate"
@@ -128,17 +128,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:background="@drawable/btn_bg"
-                android:text="날짜설정"
+                android:text="날짜"
                 android:textColor="#F5F1F1" />
 
             <Button
                 android:id="@+id/btnStartTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
                 android:layout_marginLeft="5dp"
+                android:layout_weight="0.8"
                 android:background="@drawable/btn_bg"
-                android:text="시간설정"
+                android:text="시간"
                 android:textColor="#F5F1F1" />
 
             <TextView
@@ -169,7 +169,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="종료시간설정:" />
+                android:text="종료시간:" />
 
             <Button
                 android:id="@+id/btnEndDate"
@@ -177,17 +177,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:background="@drawable/btn_bg"
-                android:text="날짜설정"
+                android:text="날짜"
                 android:textColor="#F5F1F1" />
 
             <Button
                 android:id="@+id/btnEndTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
                 android:layout_marginLeft="5dp"
+                android:layout_weight="0.8"
                 android:background="@drawable/btn_bg"
-                android:text="시간설정"
+                android:text="시간"
                 android:textColor="#F5F1F1" />
 
             <TextView
