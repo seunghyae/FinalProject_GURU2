@@ -310,8 +310,8 @@ public class RegVoteActivity extends AppCompatActivity {
         //항목체크 중복허용 여부
         if(mCheckOverlap.isChecked()){
             voteBean.overlap = true;
-        }
-
+        }else{
+        voteBean.overlap=false;}
         voteBean.startVote = false;
 
         //Firebase 데이터베이스에 투표를 등록한다.
