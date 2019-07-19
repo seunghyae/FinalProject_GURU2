@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -52,6 +54,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:background="@drawable/edttextbox"
+
+            android:drawableTint="#909090"
             android:ems="10"
             android:hint="투표 설명"
             android:inputType="textMultiLine" />
