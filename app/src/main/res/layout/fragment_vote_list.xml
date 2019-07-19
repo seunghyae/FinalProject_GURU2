@@ -12,6 +12,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:dividerHeight="10dp"
-        android:divider="#ffffff"></ListView>
+        android:divider="#fafafa"></ListView>
 
 </LinearLayout>
