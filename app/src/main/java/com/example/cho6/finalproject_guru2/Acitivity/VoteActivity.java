@@ -1,5 +1,6 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -102,6 +103,7 @@ public class VoteActivity extends AppCompatActivity {
 
                 if(isAlreadyVote) {
                     Toast.makeText(VoteActivity.this, "이미 투표 하셨습니다. 지금하신 투표는 반영되지 않습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
                     return;
                 }
 
@@ -131,7 +133,11 @@ public class VoteActivity extends AppCompatActivity {
                 mFirebaseDB.getReference().child("votes").child(mVoteBean.voteID).setValue(voteBean);
 
                 Toast.makeText(VoteActivity.this, "투표가 완료 되었습니다.", Toast.LENGTH_SHORT).show();
-                finish();
+
+                Intent i = new Intent(VoteActivity.this, ResultVoteDetailActivity.class);
+                i.putExtra(VoteBean.class.getName(), voteBean);
+
+                startActivity(i);
             }
 
             @Override

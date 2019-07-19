@@ -1,6 +1,9 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,12 +24,12 @@ public class ResultVoteActivity extends AppCompatActivity {
     private TextView mTxtTitle, mTxtEx;
     public UserVoteResultAdapter mUserVoteResultAdapter;
     private VoteBean mVoteBean;
-
+    public Button mbtnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_vote);
-
+        mbtnBack=findViewById(R.id.btnBack);
         mTxtTitle = findViewById(R.id.txtTitle);
         mTxtEx = findViewById(R.id.txtVoteEx);
         mListView = findViewById(R.id.lstResultChoice);
@@ -35,6 +38,13 @@ public class ResultVoteActivity extends AppCompatActivity {
 
         mTxtTitle.setText(mVoteBean.voteTitle);
         mTxtEx.setText(mVoteBean.voteSubTitle);
+        mbtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                finish();
+            }
+        });
     }
 
     @Override
