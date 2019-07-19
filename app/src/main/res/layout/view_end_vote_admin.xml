@@ -31,8 +31,6 @@
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_weight="0.3"
-            android:paddingLeft="20dp"
-            android:paddingBottom="20dp"
             android:scaleType="centerInside"
             android:visibility="invisible"
             app:srcCompat="@drawable/lock_" />
