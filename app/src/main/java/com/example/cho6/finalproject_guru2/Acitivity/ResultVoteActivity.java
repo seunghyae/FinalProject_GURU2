@@ -1,18 +1,13 @@
 package com.example.cho6.finalproject_guru2.Acitivity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
-import com.example.cho6.finalproject_guru2.Bean.VotedBean;
 import com.example.cho6.finalproject_guru2.R;
 import com.example.cho6.finalproject_guru2.adapter.UserVoteResultAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -20,12 +15,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ResultVoteActivity extends AppCompatActivity {
 
-    public Context mContext;
     public ListView mListView;
     private TextView mTxtTitle, mTxtEx;
     public UserVoteResultAdapter mUserVoteResultAdapter;
@@ -55,8 +46,9 @@ public class ResultVoteActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 VoteBean voteBean = dataSnapshot.getValue(VoteBean.class);
+
                 //실시간 데이터 세팅
-                mUserVoteResultAdapter = new UserVoteResultAdapter(mContext, voteBean);
+                mUserVoteResultAdapter = new UserVoteResultAdapter(ResultVoteActivity.this, voteBean);
                 mListView.setAdapter(mUserVoteResultAdapter);
             }
             @Override

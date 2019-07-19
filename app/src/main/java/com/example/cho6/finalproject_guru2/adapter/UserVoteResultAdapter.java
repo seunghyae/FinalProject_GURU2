@@ -5,13 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
-import com.example.cho6.finalproject_guru2.Bean.VotedBean;
 import com.example.cho6.finalproject_guru2.R;
 
 import java.util.List;
@@ -22,23 +19,23 @@ public class UserVoteResultAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater inflater;
     private VoteBean mVoteBean;
-    private List<VotedBean> mVotedList;
+    private List<ChoiceBean> mChoiceList;
 
     public UserVoteResultAdapter(Context context, VoteBean voteBean) {
         mContext = context;
         mVoteBean = voteBean;
-        mVotedList = voteBean.votedList;
-        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mChoiceList = voteBean.choiceList;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return mVotedList.size();
+        return mChoiceList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return mVotedList.get(i);
+        return mChoiceList.get(i);
     }
 
     @Override
@@ -52,10 +49,14 @@ public class UserVoteResultAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.view_result_choice, null);
 
         TextView txtNum = view.findViewById(R.id.txtNum);
-        RadioButton rdoChoice = view.findViewById(R.id.rdoChoice);
-        CheckBox chkChoice = view.findViewById(R.id.chkChoice);
-        final EditText edtTile = view.findViewById(R.id.edtTitle);
+        TextView txtChoiceTitle = view.findViewById(R.id.txtChoiceTitle);
+        TextView txtVoteCount = view.findViewById(R.id.txtVoteCount);
 
+        ChoiceBean choiceBean = mChoiceList.get(position);
+
+        txtNum.setText( String.valueOf(position+1) );
+        txtChoiceTitle.setText( choiceBean.itemTitle );
+        txtVoteCount.setText( String.valueOf(choiceBean.totalSelCount) + " 표" );
 
         return view;
     }

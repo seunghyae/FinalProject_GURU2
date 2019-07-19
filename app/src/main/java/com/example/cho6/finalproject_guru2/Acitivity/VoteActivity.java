@@ -105,13 +105,28 @@ public class VoteActivity extends AppCompatActivity {
                     return;
                 }
 
+                //투표한 정보 저장
                 VotedBean votedBean = new VotedBean();
-                voteBean.voteID = voteBean.voteID;
+                voteBean.voteID = mVoteBean.voteID;
                 votedBean.userId = userEmail;
                 votedBean.uuid = uuid;
                 votedBean.choiceList = mChoiceAdapter.getChoiceList();
                 //신규추가
                 voteBean.votedList.add(votedBean);
+
+                //투표한 횟수 추가
+                for(int i=0; i<voteBean.choiceList.size(); i++) {
+                    //투표 항목
+                    ChoiceBean orgChoiceBean = voteBean.choiceList.get(i);
+                    //선택된 투표항목
+                    ChoiceBean votedChoiceBean = votedBean.choiceList.get(i);
+
+                    if(votedChoiceBean.isSelect) {
+                        orgChoiceBean.plusTotalCount();                     //투표된 횟수
+                        orgChoiceBean.getSelectUserIdList().add(userEmail); //투표한 사람 email
+                        voteBean.choiceList.set(i, orgChoiceBean);
+                    }
+                }
 
                 mFirebaseDB.getReference().child("votes").child(mVoteBean.voteID).setValue(voteBean);
 
