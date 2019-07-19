@@ -34,6 +34,9 @@
             android:name=".Acitivity.MyInfoActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".Acitivity.AdminVoteActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".Acitivity.AdminMainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
