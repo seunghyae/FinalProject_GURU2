@@ -134,10 +134,10 @@ public class VoteActivity extends AppCompatActivity {
 
                 Toast.makeText(VoteActivity.this, "투표가 완료 되었습니다.", Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(VoteActivity.this, ResultVoteDetailActivity.class);
+                Intent i = new Intent(VoteActivity.this, ResultVoteActivity.class);
                 i.putExtra(VoteBean.class.getName(), voteBean);
 
-                startActivity(i);
+               startActivity(i);
             }
 
             @Override
