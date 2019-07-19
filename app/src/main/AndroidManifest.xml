@@ -22,6 +22,18 @@
             android:name=".Acitivity.RegVoteActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".Acitivity.RealAdminMainActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Acitivity.RealUserMainActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Acitivity.MyVoteListActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Acitivity.MyInfoActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".Acitivity.AdminMainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
