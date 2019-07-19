@@ -74,34 +74,12 @@ public class AdminMainActivity extends AppCompatActivity {
 
         mListView = findViewById(R.id.LstAdmin);
 
-        Button mbtnNewVote=findViewById(R.id.btnNewVote);
-        ImageButton mbtnSetting=findViewById(R.id.btnSetting);
-
-        //투표 만들기 버튼 클릭 이벤트 실행코드
-        mbtnNewVote.setOnClickListener(mbtnNewVoteClick);
-        mbtnSetting.setOnClickListener(mbtnSettingClick);
 
         //최초 데이터 세팅
         mAdminVoteAdapter = new AdminVoteAdapter(this, mVoteList);
         mListView.setAdapter(mAdminVoteAdapter);
     }
 
-    //투표 만들기 버튼 클릭 이벤트
-  private View.OnClickListener mbtnNewVoteClick=new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-          Intent i=new Intent(AdminMainActivity.this,RegVoteActivity.class);
-          startActivity(i);
-      }
-  };
-    //설정 버튼 클릭 이벤트
-    private View.OnClickListener mbtnSettingClick=new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent ii=new Intent(AdminMainActivity.this,AdminSettingActivity.class);
-            startActivity(ii);
 
-        }
-    };
 
 }

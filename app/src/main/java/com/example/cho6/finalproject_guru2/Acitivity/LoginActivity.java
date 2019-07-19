@@ -146,9 +146,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Firebase 로그인 성공",
                             Toast.LENGTH_LONG).show();
                     if(isAdmin == false){
-                        goUserMainActivity(); //유저
+                        goRealUserMainActivity(); //유저
                     }else{
-                        goAdminMainActivity(); //관리자
+                        goRealAdminMainActivity(); //관리자
                     }
                 }else{
                     Toast.makeText(getBaseContext(), "Firebase 로그인 실패",
@@ -160,14 +160,14 @@ public class LoginActivity extends AppCompatActivity {
     }  //end firebaseAuthWithGoogle()
 
     //게시판 메인 화면으로 이동한다
-    private void goUserMainActivity(){
-        Intent i = new Intent(this, UserMainActivity.class);
+    private void goRealUserMainActivity(){
+        Intent i = new Intent(this, RealUserMainActivity.class);
         startActivity(i);
         finish();
     }  // end goUserMainActivity
 
-    private void goAdminMainActivity(){
-        Intent i = new Intent(this, AdminMainActivity.class);
+    private void goRealAdminMainActivity(){
+        Intent i = new Intent(this, RealAdminMainActivity.class);
         startActivity(i);
         finish();
     } // end goAdminMainActivity

@@ -12,10 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_vote_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Acitivity.VoteDetailActivity"></activity>
-        <activity
-            android:name=".Acitivity.ResultVoteDetail"
-            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Acitivity.LoginActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -48,9 +44,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC4JUQBOocsood57IyUGoG7AwuZS4dO6Is" />
 
-        <activity
-            android:name=".Acitivity.IntroActivity"
-            android:windowSoftInputMode="adjustPan">
+        <activity android:name=".Acitivity.IntroActivity" android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

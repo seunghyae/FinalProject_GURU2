@@ -24,8 +24,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.UUID;
-
 public class JoinActivity extends AppCompatActivity {
 
     private static FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
@@ -91,7 +89,7 @@ public class JoinActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Firebase 로그인 성공",
                             Toast.LENGTH_LONG).show();
 
-                    goMainActivity();
+                    goRealUserMainActivity();
                 }else{
                     Toast.makeText(getBaseContext(), "Firebase 로그인 실패",
                             Toast.LENGTH_LONG).show();
@@ -102,8 +100,8 @@ public class JoinActivity extends AppCompatActivity {
     }  //end firebaseAuthWithGoogle()
 
 
-    private void goMainActivity(){
-        Intent i = new Intent(this, UserMainActivity.class);
+    private void goRealUserMainActivity(){
+        Intent i = new Intent(this, RealUserMainActivity.class);
         startActivity(i);
         finish();
     }  // end goMainActivity

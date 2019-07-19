@@ -22,15 +22,6 @@
             android:gravity="right"
             app:srcCompat="@drawable/user_main" />
 
-        <ImageButton
-            android:id="@+id/btnSetting"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.8"
-            android:background="#FAFAFA"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/setting" />
-
     </LinearLayout>
 
     <ListView

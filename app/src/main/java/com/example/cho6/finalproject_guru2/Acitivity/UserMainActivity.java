@@ -50,15 +50,7 @@ public class UserMainActivity extends AppCompatActivity {
 
         mListView = findViewById(R.id.LstUser);
 
-        //설정 버튼 클릭 이벤트
-        ImageButton mbtnSetting = findViewById(R.id.btnSetting);
-        mbtnSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ii = new Intent(UserMainActivity.this, SettingActivity.class);
-                startActivity(ii);
-            }
-        });
+
 
         //최초 데이터 세팅
         mUserAdapter = new UserAdapter(this, mVoteList);
