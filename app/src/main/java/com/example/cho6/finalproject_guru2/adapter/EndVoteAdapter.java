@@ -81,6 +81,8 @@ public class EndVoteAdapter extends BaseAdapter {
             }
         });
 
+
+
         return view;
     }
 }

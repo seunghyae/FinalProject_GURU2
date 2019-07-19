@@ -52,7 +52,6 @@ public class ShowPeopleAdapter extends BaseAdapter {
         final EmailBean emailBean = mEmailList.get(i);
 
         mTxtEmail = view.findViewById(R.id.txtEmail);
-
         mTxtEmail.setText(emailBean.email);
 
         return view;

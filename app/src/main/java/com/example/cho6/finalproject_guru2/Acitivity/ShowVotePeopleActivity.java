@@ -42,34 +42,20 @@ public class ShowVotePeopleActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        FirebaseDatabase.getInstance().getReference().child("votes").child(mVoteBean.voteID).child("choiceList").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("votes").child(mVoteBean.voteID).child("votedList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 VoteBean voteBean = dataSnapshot.getValue(VoteBean.class);
+                EmailBean emailBean = dataSnapshot.getValue(EmailBean.class);
+
 
                 try{
-                    if(voteBean.choiceList.size()>0) {
+                    if(voteBean.votedList.size()>0) {
                         //자신이 투표한 리스트만 보이게 함
-                        for(int i=0; i<voteBean.choiceList.size();i++) {
-
-                            FirebaseDatabase.getInstance().getReference().child("votes")
-                                    .child(mVoteBean.voteID).child("choiceList").child(String.valueOf(voteBean.choiceList.get(i))).child("selectUserIdList").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    mEmailBean = dataSnapshot.getValue(EmailBean.class);
-                                    mEmailList.add(0, mEmailBean);
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-
-
-
+                        for(int i=0; i<voteBean.votedList.size();i++) {
+                            mEmailBean.email = voteBean.votedList.get(i).userId;
+                            mEmailList.add(0, mEmailBean);
                         }
                     }
                     throw new Exception(); //강제 에러 출력
