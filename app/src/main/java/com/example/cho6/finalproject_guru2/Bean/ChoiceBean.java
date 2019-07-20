@@ -9,7 +9,7 @@ public class ChoiceBean implements Serializable {
     public boolean isSelect; //선택여부
     public String itemTitle;
     public int totalSelCount; //선택된 갯수
-    private List<String> selectUserIdList;
+    public List<String> selectUserIdList;
 
     public ChoiceBean() {
 

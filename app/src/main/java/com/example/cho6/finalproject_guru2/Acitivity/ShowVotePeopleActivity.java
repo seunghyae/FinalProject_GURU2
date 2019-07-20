@@ -47,15 +47,18 @@ public class ShowVotePeopleActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 VoteBean voteBean = dataSnapshot.getValue(VoteBean.class);
-                EmailBean emailBean = dataSnapshot.getValue(EmailBean.class);
 
 
                 try{
                     if(voteBean.votedList.size()>0) {
                         //자신이 투표한 리스트만 보이게 함
                         for(int i=0; i<voteBean.votedList.size();i++) {
-                            mEmailBean.email = voteBean.votedList.get(i).userId;
-                            mEmailList.add(0, mEmailBean);
+                            for(int j=0; j<voteBean.votedList.get(i).choiceList.size(); j++) {
+                                for(int k=0; k<voteBean.votedList.get(i).choiceList.get(i).selectUserIdList.size();k++) {
+                                    mEmailBean.email = voteBean.votedList.get(i).choiceList.get(i).selectUserIdList.get(k);
+                                    mEmailList.add(0, mEmailBean);
+                                }
+                            }
                         }
                     }
                     throw new Exception(); //강제 에러 출력
