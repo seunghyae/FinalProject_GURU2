@@ -53,9 +53,9 @@ public class ShowVotePeopleActivity extends AppCompatActivity {
                     if(voteBean.votedList.size()>0) {
                         for(int i=0; i<voteBean.votedList.size();i++) {
                             for(int j=0; j<voteBean.votedList.get(i).choiceList.size(); j++) {
-                                if(voteBean.votedList.get(j).choiceList.get(j).selectUserIdList.size()>0) {
-                                    for (int k = 0; k < voteBean.votedList.get(j).choiceList.get(j).selectUserIdList.size(); k++) {
-                                        mEmailBean.email = voteBean.votedList.get(k).choiceList.get(k).selectUserIdList.get(k);
+                                if(voteBean.votedList.get(i).choiceList.get(j).selectUserIdList!=null) {
+                                    for (int k = 0; k < voteBean.votedList.get(i).choiceList.get(j).selectUserIdList.size(); k++) {
+                                        mEmailBean.email = voteBean.votedList.get(i).choiceList.get(j).selectUserIdList.get(k);
                                         mEmailList.add(0, mEmailBean);
                                     }
                                 }
