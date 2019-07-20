@@ -42,7 +42,7 @@ public class ShowVotePeopleActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        FirebaseDatabase.getInstance().getReference().child("votes").child(mVoteBean.voteID).child("votedList").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("votes").child(mVoteBean.voteID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -51,12 +51,13 @@ public class ShowVotePeopleActivity extends AppCompatActivity {
 
                 try{
                     if(voteBean.votedList.size()>0) {
-                        //자신이 투표한 리스트만 보이게 함
                         for(int i=0; i<voteBean.votedList.size();i++) {
                             for(int j=0; j<voteBean.votedList.get(i).choiceList.size(); j++) {
-                                for(int k=0; k<voteBean.votedList.get(i).choiceList.get(i).selectUserIdList.size();k++) {
-                                    mEmailBean.email = voteBean.votedList.get(i).choiceList.get(i).selectUserIdList.get(k);
-                                    mEmailList.add(0, mEmailBean);
+                                if(voteBean.votedList.get(j).choiceList.get(j).selectUserIdList.size()>0) {
+                                    for (int k = 0; k < voteBean.votedList.get(j).choiceList.get(j).selectUserIdList.size(); k++) {
+                                        mEmailBean.email = voteBean.votedList.get(k).choiceList.get(k).selectUserIdList.get(k);
+                                        mEmailList.add(0, mEmailBean);
+                                    }
                                 }
                             }
                         }
@@ -67,12 +68,11 @@ public class ShowVotePeopleActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
-
-
-                //실시간 데이터 세팅
-                mShowPeopleAdapter = new ShowPeopleAdapter(ShowVotePeopleActivity.this, mEmailBean);
-                mListView.setAdapter(mShowPeopleAdapter);
+                if(mEmailList!=null) {
+                    //실시간 데이터 세팅
+                    mShowPeopleAdapter = new ShowPeopleAdapter(ShowVotePeopleActivity.this, mEmailBean);
+                    mListView.setAdapter(mShowPeopleAdapter);
+                }
             }
 
             @Override

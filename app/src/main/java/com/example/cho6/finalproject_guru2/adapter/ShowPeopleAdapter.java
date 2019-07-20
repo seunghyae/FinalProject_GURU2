@@ -46,10 +46,10 @@ public class ShowPeopleAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.view_choice_email, null);
 
-        final EmailBean emailBean = mEmailList.get(i);
+        //final EmailBean emailBean = mEmailList.get(i);
 
         mTxtEmail = view.findViewById(R.id.txtEmail);
-        mTxtEmail.setText(emailBean.email);
+        mTxtEmail.setText(mEmailBean.email);
 
         return view;
     }
