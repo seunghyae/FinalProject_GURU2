@@ -48,7 +48,6 @@ public class ShowVotePeopleActivity extends AppCompatActivity {
 
                 VoteBean voteBean = dataSnapshot.getValue(VoteBean.class);
 
-
                 try{
                     if(voteBean.votedList.size()>0) {
                         for(int i=0; i<voteBean.votedList.size();i++) {

@@ -48,7 +48,7 @@ public class MyInfoActivity extends AppCompatActivity {
 
         String email;
         email = mFirebaseUser.getEmail();
-        mTxtMemId.setText("구글ID: "+email);
+        mTxtMemId.setText(email);
 
         mFirebaseDB.getReference().child("members").child(Utils.getUserIdFromUUID(email)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -57,9 +57,9 @@ public class MyInfoActivity extends AppCompatActivity {
                 MemberBean bean = dataSnapshot.getValue(MemberBean.class);
                 String UUIDEmail = Utils.getUserIdFromUUID(mFirebaseUser.getEmail());
                 if(TextUtils.equals(bean.memId, UUIDEmail)) {
-                    mTxtMemName.setText("이름 : " + bean.memName);
-                    mTxtMemMajor.setText("학과 : " + bean.memMajor);
-                    mTxtMemNo.setText("학번 : " + bean.memNum);
+                    mTxtMemName.setText(bean.memName);
+                    mTxtMemMajor.setText(bean.memMajor);
+                    mTxtMemNo.setText(bean.memNum);
                 }
 
             }
