@@ -7,6 +7,9 @@
         android:id="@+id/txtEmail"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:gravity="center"
         android:hint="Email"
-        android:text="txtEmail" />
+        android:text="txtEmail"
+        android:textStyle="bold"
+        />
 </LinearLayout>

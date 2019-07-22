@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.cho6.finalproject_guru2.Bean.EmailBean;
 import com.example.cho6.finalproject_guru2.R;
 
 import java.util.List;
@@ -16,13 +15,12 @@ public class ShowPeopleAdapter extends BaseAdapter {
 
     private Context mContext;
     public LayoutInflater inflater;
-    public EmailBean mEmailBean;
-    public List<EmailBean> mEmailList;
+    public List<String> mEmailList;
     public TextView mTxtEmail;
 
-    public ShowPeopleAdapter(Context context, EmailBean emailBean) {
+    public ShowPeopleAdapter(Context context, List<String> emailList) {
         mContext = context;
-        mEmailBean = emailBean;
+        mEmailList = emailList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -46,10 +44,10 @@ public class ShowPeopleAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.view_choice_email, null);
 
-        //final EmailBean emailBean = mEmailList.get(i);
+        final String email = mEmailList.get(i);
 
         mTxtEmail = view.findViewById(R.id.txtEmail);
-        mTxtEmail.setText(mEmailBean.email);
+        mTxtEmail.setText(email);
 
         return view;
     }

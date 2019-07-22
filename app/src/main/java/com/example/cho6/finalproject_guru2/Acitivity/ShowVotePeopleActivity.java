@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.cho6.finalproject_guru2.Bean.ChoiceBean;
 import com.example.cho6.finalproject_guru2.Bean.EmailBean;
 import com.example.cho6.finalproject_guru2.Bean.VoteBean;
 import com.example.cho6.finalproject_guru2.R;
@@ -18,21 +19,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowVotePeopleActivity extends AppCompatActivity {
 
+    private TextView mTxtTitle;
     public ListView mListView;
     public ShowPeopleAdapter mShowPeopleAdapter;
     public VoteBean mVoteBean;
-    public EmailBean mEmailBean;
-    public List<EmailBean> mEmailList;
+    public List<String> mEmailList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_vote_people);
 
+        mTxtTitle = findViewById(R.id.txtTitle);
         mListView = findViewById(R.id.lstPeople);
 
         mVoteBean = (VoteBean) getIntent().getSerializableExtra(VoteBean.class.getName());
@@ -49,29 +52,27 @@ public class ShowVotePeopleActivity extends AppCompatActivity {
                 VoteBean voteBean = dataSnapshot.getValue(VoteBean.class);
 
                 try{
-                    if(voteBean.votedList.size()>0) {
-                        for(int i=0; i<voteBean.votedList.size();i++) {
-                            for(int j=0; j<voteBean.votedList.get(i).choiceList.size(); j++) {
-                                if(voteBean.votedList.get(i).choiceList.get(j).selectUserIdList!=null) {
-                                    for (int k = 0; k < voteBean.votedList.get(i).choiceList.get(j).selectUserIdList.size(); k++) {
-                                        mEmailBean.email = voteBean.votedList.get(i).choiceList.get(j).selectUserIdList.get(k);
-                                        mEmailList.add(0, mEmailBean);
-                                    }
+                    if(voteBean.choiceList != null && voteBean.choiceList.size()>0) {
+                        for(int i=0; i<voteBean.choiceList.size(); i++) {
+                            ChoiceBean choiceBean = voteBean.choiceList.get(i);
+                            if(choiceBean.selectUserIdList != null) {
+                                mEmailList.clear();
+                                for (int k = 0; k < choiceBean.selectUserIdList.size(); k++) {
+                                    String email = choiceBean.selectUserIdList.get(k);
+                                    mEmailList.add(email);
                                 }
                             }
                         }
                     }
-                    throw new Exception(); //강제 에러 출력
                 }catch (Exception e){
                     //에러시 수행
                     e.printStackTrace();
                 }
 
-                if(mEmailList!=null) {
-                    //실시간 데이터 세팅
-                    mShowPeopleAdapter = new ShowPeopleAdapter(ShowVotePeopleActivity.this, mEmailBean);
-                    mListView.setAdapter(mShowPeopleAdapter);
-                }
+                //실시간 데이터 세팅
+                mTxtTitle.setText("투표한 사람 총: " + mEmailList.size() + "명");
+                mShowPeopleAdapter = new ShowPeopleAdapter(ShowVotePeopleActivity.this, mEmailList);
+                mListView.setAdapter(mShowPeopleAdapter);
             }
 
             @Override
