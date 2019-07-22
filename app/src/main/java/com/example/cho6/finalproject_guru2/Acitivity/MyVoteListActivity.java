@@ -57,26 +57,22 @@ public class MyVoteListActivity extends AppCompatActivity {
 
                     try{
                         if(bean.votedList.size()>0) {
+                            mUserVoteList.clear();
                             //자신이 투표한 리스트만 보이게 함
                             for(int i=0; i<bean.votedList.size();i++) {
                                 if (TextUtils.equals(memId, bean.votedList.get(i).uuid))
                                     mUserVoteList.add(0, bean);
                             }
                         }
-                        throw new Exception(); //강제 에러 출력
                     }catch (Exception e){
                         //에러시 수행
                         e.printStackTrace();
                     }
 
-
-
                     //바뀐 데이터로 refresh 한다
                     if (mUserVoteAdapter != null) {
                         mUserVoteAdapter.notifyDataSetChanged();
                     }
-
-
 
                 }
             }

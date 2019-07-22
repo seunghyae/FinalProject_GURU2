@@ -136,8 +136,8 @@ public class VoteActivity extends AppCompatActivity {
 
                 Intent i = new Intent(VoteActivity.this, ResultVoteActivity.class);
                 i.putExtra(VoteBean.class.getName(), voteBean);
-
-               startActivity(i);
+                startActivity(i);
+                finish();
             }
 
             @Override
