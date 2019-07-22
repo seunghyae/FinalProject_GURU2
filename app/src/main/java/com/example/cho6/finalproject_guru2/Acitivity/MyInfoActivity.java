@@ -74,6 +74,9 @@ public class MyInfoActivity extends AppCompatActivity {
     private void logout(){
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         try{
+            if(LoginActivity.mGoogleSignInClient != null) {
+                LoginActivity.mGoogleSignInClient.signOut();
+            }
             mFirebaseAuth.signOut();
             Toast.makeText(this,"로그아웃 되었습니다.",Toast.LENGTH_LONG).show();
             Intent i=new Intent(this, com.example.cho6.finalproject_guru2.Acitivity.LoginActivity.class);

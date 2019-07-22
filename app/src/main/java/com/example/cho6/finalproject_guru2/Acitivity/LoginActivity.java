@@ -37,7 +37,7 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     //구글 로그인 클라이언트 제어자
-    private GoogleSignInClient mGoogleSignInClient;
+    public static GoogleSignInClient mGoogleSignInClient;
     //FireBase 인증객체
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDB = FirebaseDatabase.getInstance();
