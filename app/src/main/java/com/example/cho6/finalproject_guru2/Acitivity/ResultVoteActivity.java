@@ -41,8 +41,8 @@ public class ResultVoteActivity extends AppCompatActivity {
         mbtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                finish();
+                Intent intent =new Intent(ResultVoteActivity.this, UserMainActivity.class);
+                startActivity(intent);
             }
         });
     }
